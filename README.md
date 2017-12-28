@@ -8,23 +8,20 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites 
 
-#### Python 3.6.2
-#### Tensorflow 1.3.0
-#### Kivy 1.10.0
+Python 3.6.2
+Tensorflow 1.3.0
+Kivy 1.10.0
 
 
 ### Installing (Windows)
 
 #### Python 3.6.2
-Install Guide: 
 https://www.python.org/downloads/windows/
 
 #### Tensorflow 1.3.0
-Install Guide: 
 https://www.tensorflow.org/install/install_windows
 
 #### Kivy 1.10.0
-Install Guide: 
 https://kivy.org/docs/installation/installation-windows.html#install-win-dist
 
 ## Running the tests
