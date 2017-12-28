@@ -8,8 +8,8 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-Python 3.6.2.
-Tensorflow 1.3.0.
+Python 3.6.2
+Tensorflow 1.3.0
 Kivy 1.10.0.
 
 ### Installing
