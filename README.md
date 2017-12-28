@@ -12,11 +12,11 @@ These instructions will get you a copy of the project up and running on your loc
 Install Guide (Windows): 
 https://www.python.org/downloads/windows/
 
-####Tensorflow 1.3.0
+#### Tensorflow 1.3.0
 Install Guide(Windows): 
 https://www.tensorflow.org/install/install_windows
 
-####Kivy 1.10.0
+#### Kivy 1.10.0
 Install Guide(Windows): 
 https://kivy.org/docs/installation/installation-windows.html#install-win-dist
 
