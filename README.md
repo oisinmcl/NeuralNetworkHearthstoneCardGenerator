@@ -6,38 +6,26 @@ Hearthstone Card Generation using intelligent learning techniques.
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### Prerequisites
+### Prerequisites 
 
 #### Python 3.6.2
-Install Guide (Windows): 
+#### Tensorflow 1.3.0
+#### Kivy 1.10.0
+
+
+### Installing (Windows)
+
+#### Python 3.6.2
+Install Guide: 
 https://www.python.org/downloads/windows/
 
 #### Tensorflow 1.3.0
-Install Guide(Windows): 
+Install Guide: 
 https://www.tensorflow.org/install/install_windows
 
 #### Kivy 1.10.0
-Install Guide(Windows): 
+Install Guide: 
 https://kivy.org/docs/installation/installation-windows.html#install-win-dist
-
-
-### Installing
-
-A step by step series of examples that tell you have to get a development env running
-
-Say what the step will be
-
-```
-Give the example
-```
-
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
 
 ## Running the tests
 
