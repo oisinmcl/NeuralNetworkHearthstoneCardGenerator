@@ -9,14 +9,17 @@ These instructions will get you a copy of the project up and running on your loc
 ### Prerequisites 
 
 Python 3.6.2
+python-firebase 1.2
 Tensorflow 1.3.0
 Kivy 1.10.0
-
 
 ### Installing (Windows)
 
 #### Python 3.6.2
 https://www.python.org/downloads/windows/
+
+#### python-firebase 1.2
+https://pypi.python.org/pypi/python-firebase/1.2
 
 #### Tensorflow 1.3.0
 https://www.tensorflow.org/install/install_windows
