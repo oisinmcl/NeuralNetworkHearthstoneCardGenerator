@@ -1,0 +1,79 @@
+#:kivy 1.10.0
+
+<Training_Setup>
+RelativeLayout:
+	title: 'Training Setup'
+    canvas:
+        Color:
+            rgb: 1, 1, 1
+        Rectangle:
+            source: 'Resources/background.jpg'
+            size: self.size
+	
+	
+	BoxLayout:	
+		size: self.parent.size  
+		pos: self.parent.pos  
+		orientation: 'vertical'
+
+
+		BoxLayout:
+			size: self.parent.size  
+			pos: self.parent.pos  
+			orientation: 'horizontal'
+			padding: 100
+			spacing: 20
+			
+			BoxLayout:
+				canvas.before:
+					Color:
+						rgba: 0.4, 0.37, 0.32, 0.8  # blue
+					Rectangle:
+						pos: self.pos
+						size: self.size		
+				size: self.parent.size  
+				pos: self.parent.pos  
+				orientation: 'vertical'
+				
+				Label:
+					text: 'label 1'
+					
+				Label:
+					text: 'label 2'	
+					
+				Label:
+					text: 'label 3'
+					
+				Label:
+					text: 'label 4'	
+					
+			BoxLayout:
+				canvas.before:
+					Color:
+						rgba: 0.4, 0.37, 0.32, 0.8  # blue
+					Rectangle:
+						pos: self.pos
+						size: self.size		
+
+				size: self.parent.size  
+				pos: self.parent.pos  
+				orientation: 'vertical'
+				
+				Label:
+					text: 'label 1'
+					
+				Label:
+					text: 'label 2'	
+					
+				Label:
+					text: 'label 3'
+					
+				Label:
+					text: 'label 4'	
+			
+		BoxLayout:
+			size_hint_y: .2
+			size_hint_x: .3
+			Button:
+
+			

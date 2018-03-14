@@ -1,7 +1,7 @@
-from hs_rnn import HSCardGen 
+from hs_rnn import Neural_Network 
 
 
-nn = HSCardGen()
+nn = Neural_Network()
 
 #nn.startTraining()
 nn.StartGenerating(1000)

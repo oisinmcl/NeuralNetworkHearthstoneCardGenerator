@@ -8,7 +8,7 @@ import numpy as np
 import data_tools as txt
 
 
-class HSCardGen:
+class Neural_Network:
 
 	def __init__(self):
 		tf.set_random_seed(0)
