@@ -5,13 +5,15 @@ import os
 import time
 import math
 import numpy as np
-import data_tools as txt
+from data_tools import Data_Tools
+from data_tools import Progress
 
 
 class Neural_Network:
 
 	def __init__(self):
 		tf.set_random_seed(0)
+		self.txt = Data_Tools()
 		
 		#training vars
 		self.seqLength = 30
@@ -31,11 +33,11 @@ class Neural_Network:
 		ncnt = 0
 	
 		# load data, either shakespeare, or the Python source of Tensorflow itself
-		codetext, valitext, bookranges = txt.read_data_files(self.trainingDataDir, validation=True)
+		codetext, valitext, bookranges = self.txt.read_data_files(self.trainingDataDir, validation=True)
 
 		# display some stats on the data
 		epoch_size = len(codetext) // (self.batchSize * self.seqLength)
-		txt.print_data_stats(len(codetext), len(valitext), epoch_size)
+		self.txt.print_data_stats(len(codetext), len(valitext), epoch_size)
 
 		#
 		# the model (see FAQ in README.md)
@@ -108,7 +110,7 @@ class Neural_Network:
 		# for display: init the progress bar
 		DISPLAY_FREQ = 50
 		_50_BATCHES = DISPLAY_FREQ * self.batchSize * self.seqLength
-		progress = txt.Progress(DISPLAY_FREQ, size=111+2, msg="Training on next "+str(DISPLAY_FREQ)+" batches")
+		progress = Progress(DISPLAY_FREQ, size=111+2, msg="Training on next "+str(DISPLAY_FREQ)+" batches")
 
 
 		# init
@@ -129,7 +131,7 @@ class Neural_Network:
 			if step % _50_BATCHES == 0:
 				feed_dict = {X: x, Y_: y_, Hin: istate, pkeep: 1.0, batchsize: self.batchSize}  # no dropout for validation
 				y, l, bl, acc, smm = sess.run([Y, seqloss, batchloss, accuracy, summaries], feed_dict=feed_dict)
-				txt.print_learning_learned_comparison(x, y, l, bookranges, bl, acc, epoch_size, step, epoch)
+				self.txt.print_learning_learned_comparison(x, y, l, bookranges, bl, acc, epoch_size, step, epoch)
 				summary_writer.add_summary(smm, step)
 
 			# run a validation step every 50 batches
@@ -139,27 +141,27 @@ class Neural_Network:
 			if step % _50_BATCHES == 0 and len(valitext) > 0:
 				VALI_self.seqLength = 1*1024  # Sequence length for validation. State will be wrong at the start of each sequence.
 				bsize = len(valitext) // VALI_self.seqLength
-				txt.print_validation_header(len(codetext), bookranges)
-				vali_x, vali_y, _ = next(txt.rnn_minibatch_sequencer(valitext, bsize, VALI_self.seqLength, 1))  # all data in 1 batch
+				self.txt.print_validation_header(len(codetext), bookranges)
+				vali_x, vali_y, _ = next(self.txt.rnn_minibatch_sequencer(valitext, bsize, VALI_self.seqLength, 1))  # all data in 1 batch
 				vali_nullstate = np.zeros([bsize, self.internalSize*self.nLayers])
 				feed_dict = {X: vali_x, Y_: vali_y, Hin: vali_nullstate, pkeep: 1.0,  # no dropout for validation
 							 batchsize: bsize}
 				ls, acc, smm = sess.run([batchloss, accuracy, summaries], feed_dict=feed_dict)
-				txt.print_validation_stats(ls, acc)
+				self.txt.print_validation_stats(ls, acc)
 				# save validation data for Tensorboard
 				validation_writer.add_summary(smm, step)
 
 			# display a short text generated with the current weights and biases (every 150 batches)
 			if step // 3 % _50_BATCHES == 0:
-				txt.print_text_generation_header()
-				ry = np.array([[txt.encodeChar(ord("K"))]])
+				self.txt.print_text_generation_header()
+				ry = np.array([[self.txt.encodeChar(ord("K"))]])
 				rh = np.zeros([1, self.internalSize * self.nLayers])
 				for k in range(1000):
 					ryo, rh = sess.run([Yo, H], feed_dict={X: ry, pkeep: 1.0, Hin: rh, batchsize: 1})
-					rc = txt.sample_from_probabilities(ryo, topn=10 if epoch <= 1 else 2)
+					rc = self.txt.sample_from_probabilities(ryo, topn=10 if epoch <= 1 else 2)
 					ry = np.array([[rc]])
-					print(chr(txt.decodeChar(rc)), end="")
-				txt.print_text_generation_footer()
+					print(chr(self.txt.decodeChar(rc)), end="")
+				self.txt.print_text_generation_footer()
 
 			# save a checkpoint (every 500 batches)
 			if step // 10 % _50_BATCHES == 0:
@@ -178,7 +180,7 @@ class Neural_Network:
 		with tf.Session() as sess:
 			new_saver = tf.train.import_meta_graph(self.checkpoint + '.meta')
 			new_saver.restore(sess, self.checkpoint)
-			x = txt.encodeChar(ord("L"))
+			x = self.txt.encodeChar(ord("L"))
 			x = np.array([[x]])  # shape [self.batchSize, self.seqLength] with self.batchSize=1 and self.seqLength=1
 			ncnt = 0
 			self.outputfile = "Output_data/output_" +str(math.trunc(time.time()))+".txt"
@@ -195,9 +197,9 @@ class Neural_Network:
 
 				# Recommended: topn = 10 for intermediate checkpoints, topn=2 or 3 for fully trained checkpoints
 
-				c = txt.sample_from_probabilities(yo, topn=2)
+				c = self.txt.sample_from_probabilities(yo, topn=2)
 				y = np.array([[c]])  # shape [self.batchSize, self.seqLength] with self.batchSize=1 and self.seqLength=1
-				c = chr(txt.decodeChar(c))
+				c = chr(self.txt.decodeChar(c))
 				print(c, end="")
 				file.write(c)
 				

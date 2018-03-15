@@ -1,5 +1,7 @@
 #:kivy 1.10.0
 
+#:import HSbutton CustomWidgets.HSButton
+
 <Main_Menu>
 FloatLayout:
 	title: 'Main Menu'
@@ -34,13 +36,13 @@ FloatLayout:
 				padding: 10
 				spacing: 10
 				
-				Button:
+				HSButton:
 					text: 'Generate'
-				
-				Button:
+
+				HSButton:
 					text: 'Train'
-				
-				Button:
+					
+				HSButton:
 					text: 'Card Manager'
 					
 				BoxLayout:	#formatting only
