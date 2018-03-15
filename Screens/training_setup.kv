@@ -1,14 +1,18 @@
 #:kivy 1.10.0
 
-<Training_Setup>
+#:import HSbutton CustomWidgets.HSButton
+#:import HSLabel CustomWidgets.HSLabel
+#:import HSTextInput CustomWidgets.HSTextInput
+
+<Training_Setup>:
 RelativeLayout:
 	title: 'Training Setup'
-    canvas:
-        Color:
-            rgb: 1, 1, 1
-        Rectangle:
-            source: 'Resources/background.jpg'
-            size: self.size
+	canvas:
+		Color:
+			rgb: 1, 1, 1
+		Rectangle:
+			source: 'Resources/background.jpg'
+			size: self.size
 	
 	
 	BoxLayout:	
@@ -35,17 +39,54 @@ RelativeLayout:
 				pos: self.parent.pos  
 				orientation: 'vertical'
 				
-				Label:
-					text: 'label 1'
+				GridLayout:
+					cols: 2
+					padding: 10 
+					spacing: 20
 					
-				Label:
-					text: 'label 2'	
-					
-				Label:
-					text: 'label 3'
-					
-				Label:
-					text: 'label 4'	
+					HSLabel:
+						text: 'label 1'
+						size: self.parent.size  
+						pos: self.parent.pos						
+						
+					HSTextInput: 	
+						text: 'Text 1'
+						size: self.parent.size  
+						pos: self.parent.pos
+						size_hint_x: .5								
+						
+					HSLabel:
+						text: 'label 2'	
+						size: self.parent.size  
+						pos: self.parent.pos						
+						
+					HSTextInput: 	
+						text: 'Text 2'
+						size: self.parent.size  
+						pos: self.parent.pos						
+						size_hint_x: .5	
+						
+					HSLabel:
+						text: 'label 3'
+						size: self.parent.size  
+						pos: self.parent.pos						
+						
+					HSTextInput: 	
+						text: 'Text 3'
+						size: self.parent.size  
+						pos: self.parent.pos						
+						
+					HSLabel:
+						text: 'label 4'	
+						size: self.parent.size  
+						pos: self.parent.pos						
+						size_hint_x: .5	
+						
+					HSTextInput: 	
+						text: 'Text 4'
+						size: self.parent.size  
+						pos: self.parent.pos
+						size_hint_x: .5			
 					
 			BoxLayout:
 				canvas.before:
@@ -59,21 +100,62 @@ RelativeLayout:
 				pos: self.parent.pos  
 				orientation: 'vertical'
 				
-				Label:
-					text: 'label 1'
+				GridLayout:
+					cols: 2
+					padding: 10 
+					spacing: 20
 					
-				Label:
-					text: 'label 2'	
-					
-				Label:
-					text: 'label 3'
-					
-				Label:
-					text: 'label 4'	
-			
-		BoxLayout:
-			size_hint_y: .2
-			size_hint_x: .3
-			Button:
+					HSLabel:
+						text: 'Number of Layers'
+						size: self.parent.size  
+						pos: self.parent.pos						
+						
+					HSTextInput: 	
+						text:  '3'
+						size: self.parent.size  
+						pos: self.parent.pos
+						size_hint_x: .5						
+						
+					HSLabel:
+						text: 'Internal Size'	
+						size: self.parent.size  
+						pos: self.parent.pos						
+						
+					HSTextInput: 	
+						text: 'Internal Size'
+						size: self.parent.size  
+						pos: self.parent.pos
+						size_hint_x: .5								
+						
+					HSLabel:
+						text: 'Learning Rate'
+						size: self.parent.size  
+						pos: self.parent.pos						
+						
+					HSTextInput: 	
+						text: 'Learning Rate'
+						size: self.parent.size  
+						pos: self.parent.pos						
+						size_hint_x: .5		
+						
+					HSLabel:
+						text: 'Epochs'	
+						size: self.parent.size  
+						pos: self.parent.pos						
+						
+					HSTextInput: 	
+						text: 'Epochs'
+						size: self.parent.size  
+						pos: self.parent.pos						
+						size_hint_x: .5		
+		GridLayout:
+			cols: 3
+			size_hint_y: .3
+			BoxLayout:
+			HSButton:
+				text: 'Start Training'
+			BoxLayout:
+			BoxLayout:
+			BoxLayout:	
 
 			

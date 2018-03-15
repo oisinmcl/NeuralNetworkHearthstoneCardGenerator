@@ -6,15 +6,21 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.button import Button
 from kivy.lang import Builder
 from kivy.config import Config
+from kivy.properties import StringProperty
+
 from hs_rnn import Neural_Network
 
 Config.read('config.ini')
 
 class Training_Setup(FloatLayout):
+	nLayers = StringProperty()
+
+	
 	def __init__(self, **kwargs): 
 		super(Training_Setup, self).__init__(**kwargs)
 		self.builder = Builder.load_file('Screens/Training_Setup.kv')
-
+		nn = Neural_Network()
+		self.nLayers = str(nn.nLayers)
 		
 class myApp(App):
 	icon = 'Resources/logo_hearthstone.ico'
