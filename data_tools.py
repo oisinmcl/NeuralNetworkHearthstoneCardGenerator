@@ -74,7 +74,7 @@ class Data_Tools:
 		:param s: a text string
 		:return: encoded list of code points
 		"""
-		return list(map(lambda a: self.decodeChar(ord(a)), s))
+		return list(map(lambda a: self.encodeChar(ord(a)), s))
 
 
 	def decode_text(self, c, avoid_tab_and_lf=False):
