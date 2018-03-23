@@ -1,0 +1,21 @@
+Widgets:
+	Numeric input with validation
+	Pop up with confirm button and text
+	label 
+	button
+	
+
+Screens:
+	Main Menu ***Complete
+	Training Set up ***Started***
+	Training Progress (Could be a custom popup?) 
+	Generate Set up
+	Generate Progress (Could be a custom popup?) 
+	Card Manager
+
+Classes:
+	Database Manager
+	Hearth API
+	Card
+	data tools ***Started***
+	

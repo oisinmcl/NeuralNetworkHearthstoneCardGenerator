@@ -162,10 +162,12 @@
 						HSTextInput: 	
 							id: txt_nLayersID
 							text:  str(root.nLayers)
-							##bind: str(root.nn.nLayers)
+							on_text: root.nLayersChange(self.text)
+							input_type: 'number'
 							size: self.parent.size  
 							pos: self.parent.pos
-							size_hint_x: .5						
+							size_hint_x: .5
+							hint_text: 'Number of Layers..'							
 							
 						HSLabel:
 							text: 'Internal Size'	
