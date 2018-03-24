@@ -24,6 +24,7 @@ class Neural_Network:
 		self.learningRate = 0.001  # fixed learning rate
 		self.dropout_pkeep = 0.8    # some dropout
 		self.trainingDataDir = "training_data/*.txt"
+		self.epochs = 10
 		
 		self.checkpoint = "Checkpoints/rnn_train_1510277210-21000000" #4 hours training hearthstone cards
 		self.outputfile = "output.txt"
@@ -121,7 +122,7 @@ class Neural_Network:
 		step = 0
 		
 		# training loop
-		for x, y_, epoch in self.batch_sequencer(codetext, self.batchSize, self.seqLength, nb_epochs=10):
+		for x, y_, epoch in self.batch_sequencer(codetext, self.batchSize, self.seqLength, self.epochs):
 
 			# train on one minibatch
 			feed_dict = {X: x, Y_: y_, Hin: istate, lr: self.learningRate, pkeep: self.dropout_pkeep, batchsize: self.batchSize}

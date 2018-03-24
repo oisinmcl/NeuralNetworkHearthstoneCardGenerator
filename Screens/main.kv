@@ -155,52 +155,58 @@
 						spacing: 20
 						
 						HSLabel:
-							text: 'Number of Layers'
+							text: 'Number of Layers: '
 							size: self.parent.size  
 							pos: self.parent.pos						
 							
-						HSTextInput: 	
+						HSNumericInput: 	
 							id: txt_nLayersID
 							text:  str(root.nLayers)
-							on_text: root.nLayersChange(self.text)
+							hint_text: 'Number of Layers'	
+							on_text: self.enforce_int(self)
 							input_type: 'number'
 							size: self.parent.size  
 							pos: self.parent.pos
-							size_hint_x: .5
-							hint_text: 'Number of Layers..'							
+							size_hint_x: .5					
 							
 						HSLabel:
-							text: 'Internal Size'	
+							text: 'Internal Size: '	
 							size: self.parent.size  
 							pos: self.parent.pos						
 							
-						HSTextInput:
+						HSNumericInput:
 							id: txt_intSizeID
-							text: 'Internal Size'
+							text:  str(root.internalSize)
+							hint_text: 'Internal Size'
+							on_text: self.enforce_int(self)
 							size: self.parent.size  
 							pos: self.parent.pos
 							size_hint_x: .5								
 							
 						HSLabel:
-							text: 'Learning Rate'
+							text: 'Learning Rate: '
 							size: self.parent.size  
 							pos: self.parent.pos						
 							
-						HSTextInput: 
+						HSNumericInput: 
 							id: txt_learningRateID
-							text: 'Learning Rate'
+							text:  str(root.learningRate)
+							hint_text: 'Learning Rate'
+							on_text: self.enforce_float(self)
 							size: self.parent.size  
 							pos: self.parent.pos						
 							size_hint_x: .5		
 							
 						HSLabel:
-							text: 'Epochs'	
+							text: 'Epochs: '	
 							size: self.parent.size  
 							pos: self.parent.pos						
 							
-						HSTextInput: 
+						HSNumericInput: 
 							id: txt_epochID
-							text: 'Epochs'
+							text:  str(root.epochs)
+							hint_text: 'Epochs'
+							on_text: self.enforce_int(self)
 							size: self.parent.size  
 							pos: self.parent.pos						
 							size_hint_x: .5		
@@ -210,8 +216,8 @@
 				BoxLayout:
 				HSButton:
 					text: 'Start Training'
-					#on_release: app.trainingSetup.btnStartTraining(self)
-					on_release: root.printNlayers()
+					on_release: app.trainingSetup.btnStartTraining(self)
+					##on_release: root.printNlayers()
 				BoxLayout:
 				BoxLayout:
 				BoxLayout:				
