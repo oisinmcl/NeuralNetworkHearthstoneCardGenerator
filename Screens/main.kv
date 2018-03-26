@@ -41,13 +41,15 @@
 					
 					HSButton:
 						text: 'Generate'
-						on_press: root.manager.current = 'Training_Setup'
+						on_press: root.manager.current = 'Generate_Setup'
 
 					HSButton:
 						text: 'Train'
+						on_press: root.manager.current = 'Training_Setup'
 						
 					HSButton:
 						text: 'Card Manager'
+						on_press: root.manager.current = 'Card_Manager'
 						
 					BoxLayout:	#formatting only
 				BoxLayout:	#formatting only
@@ -68,7 +70,7 @@
 			size: self.parent.size  
 			pos: self.parent.pos  
 			orientation: 'vertical'
-
+			
 
 			BoxLayout:
 				size: self.parent.size  
@@ -143,7 +145,7 @@
 							rgba: 0.4, 0.37, 0.32, 0.8  # blue
 						Rectangle:
 							pos: self.pos
-							size: self.size		
+							size: self.size
 
 					size: self.parent.size  
 					pos: self.parent.pos  
@@ -163,7 +165,10 @@
 							id: txt_nLayersID
 							text:  str(root.nLayers)
 							hint_text: 'Number of Layers'	
-							on_text: self.enforce_int(self)
+							on_text: root.nLayersChange(self)
+							min: 1
+							max: 10
+							#tooltiptext: 'Test tool tip'
 							input_type: 'number'
 							size: self.parent.size  
 							pos: self.parent.pos
@@ -178,7 +183,9 @@
 							id: txt_intSizeID
 							text:  str(root.internalSize)
 							hint_text: 'Internal Size'
-							on_text: self.enforce_int(self)
+							on_text: root.internalSizeChange(self)
+							min: 256
+							max: 2048						
 							size: self.parent.size  
 							pos: self.parent.pos
 							size_hint_x: .5								
@@ -192,7 +199,9 @@
 							id: txt_learningRateID
 							text:  str(root.learningRate)
 							hint_text: 'Learning Rate'
-							on_text: self.enforce_float(self)
+							on_text: root.learningRateChange(self)
+							min: 0.00001
+							max: 0.5
 							size: self.parent.size  
 							pos: self.parent.pos						
 							size_hint_x: .5		
@@ -206,7 +215,8 @@
 							id: txt_epochID
 							text:  str(root.epochs)
 							hint_text: 'Epochs'
-							on_text: self.enforce_int(self)
+							on_text: root.epochsChange(self)
+
 							size: self.parent.size  
 							pos: self.parent.pos						
 							size_hint_x: .5		
@@ -214,10 +224,244 @@
 				cols: 3
 				size_hint_y: .3
 				BoxLayout:
+					orientation: 'horizontal'
+					BoxLayout:
+					HSButton:
+						##font_name: 'Roboto'
+						size: self.parent.size  
+						pos: self.parent.pos	
+						on_press: root.manager.current = 'MainMenu'
+						text: 'Back' 
+						##text: u'\u21A9' ## unicode for back arrow
+					BoxLayout:
+					BoxLayout:
 				HSButton:
 					text: 'Start Training'
-					on_release: app.trainingSetup.btnStartTraining(self)
-					##on_release: root.printNlayers()
+					##on_release: app.trainingSetup.btnStartTraining(self)
+					on_release: root.showNNStats()
 				BoxLayout:
 				BoxLayout:
-				BoxLayout:				
+				BoxLayout:	
+
+<Generate_Setup>:
+	name: 'Generate_Setup'
+	RelativeLayout:
+		title: 'Training Setup'
+		canvas:
+			Color:
+				rgb: 1, 1, 1
+			Rectangle:
+				source: 'Resources/background.jpg'
+				size: self.size
+		
+		
+		BoxLayout:	
+			size: self.parent.size  
+			pos: self.parent.pos  
+			orientation: 'vertical'
+			
+
+			BoxLayout:
+				size: self.parent.size  
+				pos: self.parent.pos  
+				orientation: 'horizontal'
+				padding: 100
+				spacing: 20
+				
+				BoxLayout:
+					canvas.before:
+						Color:
+							rgba: 0.4, 0.37, 0.32, 0.8  # blue
+						Rectangle:
+							pos: self.pos
+							size: self.size		
+					size: self.parent.size  
+					pos: self.parent.pos  
+					orientation: 'vertical'
+					
+					GridLayout:
+						cols: 2
+						padding: 10 
+						spacing: 20
+						
+						HSLabel:
+							text: 'label 1'
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSTextInput: 	
+							text: 'Text 1'
+							size: self.parent.size  
+							pos: self.parent.pos
+							size_hint_x: .5								
+							
+						HSLabel:
+							text: 'label 2'	
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSTextInput: 	
+							text: 'Text 2'
+							size: self.parent.size  
+							pos: self.parent.pos						
+							size_hint_x: .5	
+							
+						HSLabel:
+							text: 'label 3'
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSTextInput: 	
+							text: 'Text 3'
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSLabel:
+							text: 'label 4'	
+							size: self.parent.size  
+							pos: self.parent.pos						
+							size_hint_x: .5	
+							
+						HSTextInput: 	
+							text: 'Text 4'
+							size: self.parent.size  
+							pos: self.parent.pos
+							size_hint_x: .5			
+						
+				BoxLayout:
+					canvas.before:
+						Color:
+							rgba: 0.4, 0.37, 0.32, 0.8  # blue
+						Rectangle:
+							pos: self.pos
+							size: self.size
+
+					size: self.parent.size  
+					pos: self.parent.pos  
+					orientation: 'vertical'
+					
+					GridLayout:
+						cols: 2
+						padding: 10 
+						spacing: 20
+						
+						HSLabel:
+							text: 'Number of Layers: '
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput: 	
+							id: txt_nLayersID
+							text:  str(root.nLayers)
+							hint_text: 'Number of Layers'	
+							on_text: root.nLayersChange(self)
+							min: 1
+							max: 10
+							#tooltiptext: 'Test tool tip'
+							input_type: 'number'
+							size: self.parent.size  
+							pos: self.parent.pos
+							size_hint_x: .5					
+							
+						HSLabel:
+							text: 'Internal Size: '	
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput:
+							id: txt_intSizeID
+							text:  str(root.internalSize)
+							hint_text: 'Internal Size'
+							on_text: root.internalSizeChange(self)
+							min: 256
+							max: 2048						
+							size: self.parent.size  
+							pos: self.parent.pos
+							size_hint_x: .5								
+							
+						HSLabel:
+							text: 'Learning Rate: '
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput: 
+							id: txt_learningRateID
+							text:  str(root.learningRate)
+							hint_text: 'Learning Rate'
+							on_text: root.learningRateChange(self)
+							min: 0.00001
+							max: 0.5
+							size: self.parent.size  
+							pos: self.parent.pos						
+							size_hint_x: .5		
+							
+						HSLabel:
+							text: 'Epochs: '	
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput: 
+							id: txt_epochID
+							text:  str(root.epochs)
+							hint_text: 'Epochs'
+							on_text: root.epochsChange(self)
+
+							size: self.parent.size  
+							pos: self.parent.pos						
+							size_hint_x: .5		
+			GridLayout:
+				cols: 3
+				size_hint_y: .3
+				BoxLayout:
+					orientation: 'horizontal'
+					BoxLayout:
+					HSButton:
+						##font_name: 'Roboto'
+						size: self.parent.size  
+						pos: self.parent.pos	
+						on_press: root.manager.current = 'MainMenu'
+						text: 'Back' 
+						##text: u'\u21A9' ## unicode for back arrow
+					BoxLayout:
+					BoxLayout:
+				HSButton:
+					text: 'Start Training'
+					##on_release: app.trainingSetup.btnStartTraining(self)
+					on_release: root.showNNStats()
+				BoxLayout:
+				BoxLayout:
+				BoxLayout:	
+				
+<Card_Manager>:
+	name: 'Card_Manager'
+	RelativeLayout:
+		title: 'Training Setup'
+		canvas:
+			Color:
+				rgb: 1, 1, 1
+			Rectangle:
+				source: 'Resources/background.jpg'
+				size: self.size
+		
+		
+		BoxLayout:	
+			size: self.parent.size  
+			pos: self.parent.pos  
+			orientation: 'vertical'
+			padding: 10
+			
+			BoxLayout:
+				size: self.parent.size  
+				pos: self.parent.pos  
+				orientation: 'horizontal'
+			
+			HSButton:
+				##pos: self.parent.pos  
+				size_hint_y: .2
+				size_hint_y: .3
+				text: 'Main Menu'
+				on_press: root.manager.current = 'MainMenu'
+			
+
+
+				

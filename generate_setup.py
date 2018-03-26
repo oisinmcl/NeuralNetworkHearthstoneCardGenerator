@@ -10,7 +10,7 @@ from CustomWidgets import HSConfirmPopup
 import threading
 
 
-class Training_Setup(Screen):
+class Generate_Setup(Screen):
 	nLayers = StringProperty()
 	internalSize = StringProperty()
 	learningRate = StringProperty()
@@ -18,7 +18,7 @@ class Training_Setup(Screen):
 	
 			   
 	def __init__(self, _nn, **kwargs): 
-		super(Training_Setup, self).__init__(**kwargs)
+		super(Generate_Setup, self).__init__(**kwargs)
 		self.nn = _nn
 		self.nLayers = str(self.nn.nLayers)
 		self.internalSize = str(self.nn.internalSize)
