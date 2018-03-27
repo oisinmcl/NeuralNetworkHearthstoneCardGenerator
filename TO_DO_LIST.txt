@@ -1,8 +1,9 @@
 Widgets:
-	Numeric input with validation
+	Numeric input with validation				***Started***
 	Pop up with confirm button and text	 		***Complete
 	label 										***Complete
 	button										***Complete
+	file choose popup
 	
 
 Screens:

@@ -6,11 +6,14 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup 
 from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.filechooser import FileChooserIconView 
 
 from kivy.properties import NumericProperty, ObjectProperty, ListProperty, StringProperty
 
 from kivy.graphics.context_instructions import Color
 from kivy.graphics.vertex_instructions import Rectangle
+
+
 
 #from kivy.core.window import Window
 
@@ -132,6 +135,39 @@ class HSConfirmPopup(Popup):
 		hsbutton.bind(on_press=mypopup.dismiss)		
 		mypopup.open()
 		
-
+class HSFileChooserPopup(Popup):
+	#foreground_color = ListProperty([0.20,0.18,0.02,0.8])
+	#background_color = ListProperty([ 0.4, 0.37, 0.32, 0.8])
+	#font_name = ObjectProperty('Resources/Fonts/BelweBdBTBold.ttf')
+	#font_size = NumericProperty(18)
 	
+	def __init__(self, _title, _path):
+		self.selectedDir = _path
+	
+		content = BoxLayout(orientation = 'vertical', 
+							padding = (10),
+							spacing= 20)
+		self.filechooser = FileChooserIconView(id= 'dataPicker',
+										path = self.selectedDir,
+										dirselect= True,
+										size = self.size)			
+		content.add_widget(self.filechooser)
+		
+		hsbutton = HSButton(text = "OK!", size_hint=(.4,.2),pos_hint= {'x': .3,'top': 0})
+		content.add_widget(hsbutton)
+		
+		self.mypopup = Popup(content = content,              
+							title = _title,
+							title_font = 'Resources/Fonts/Belwe-Medium.ttf',
+							auto_dismiss = False,
+							#size_hint=(.5, .35),
+							separator_color = [247/255,143/255,46/255,1])
+		
+		hsbutton.bind(on_press=self.exitPopup)		
+		self.mypopup.open()
+	
+	def exitPopup(self):
+		print(self.filechooser.path)
+		self.selectedDir = self.filechooser.path
+		self.mypopup.dismiss()
 		

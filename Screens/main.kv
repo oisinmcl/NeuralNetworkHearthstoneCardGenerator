@@ -4,7 +4,7 @@
 #:import HSLabel CustomWidgets.HSLabel
 #:import HSTextInput CustomWidgets.HSTextInput
 
-<Main_Menu>
+<Main_Menu>:
 	name: 'MainMenu'
 	FloatLayout:
 		title: 'Main Menu'
@@ -53,7 +53,7 @@
 						
 					BoxLayout:	#formatting only
 				BoxLayout:	#formatting only
-			
+
 <Training_Setup>:
 	name: 'Training_Setup'
 	RelativeLayout:
@@ -96,26 +96,28 @@
 						spacing: 20
 						
 						HSLabel:
-							text: 'label 1'
-							size: self.parent.size  
+							text: 'Data Directory'
+							size_hint_x: .5	
 							pos: self.parent.pos						
 							
 						HSTextInput: 	
-							text: 'Text 1'
-							size: self.parent.size  
+							text:  str(root.dataPath)
+							on_text: root.dataPathChange(self.text)
+							##size: self.parent.size  
 							pos: self.parent.pos
-							size_hint_x: .5								
+							on_focus: root.showFileChooser()
+							
 							
 						HSLabel:
 							text: 'label 2'	
-							size: self.parent.size  
+							size_hint_x: .5	 
 							pos: self.parent.pos						
 							
 						HSTextInput: 	
 							text: 'Text 2'
 							size: self.parent.size  
 							pos: self.parent.pos						
-							size_hint_x: .5	
+							
 							
 						HSLabel:
 							text: 'label 3'

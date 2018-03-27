@@ -23,7 +23,8 @@ class Neural_Network:
 		self.nLayers = 3
 		self.learningRate = 0.001  # fixed learning rate
 		self.dropout_pkeep = 0.8    # some dropout
-		self.trainingDataDir = "training_data/*.txt"
+		self.trainingDataPath = 'training_data'
+		self.trainingDataDir = self.trainingDataPath+'/*.txt'
 		self.epochs = 10
 		
 		self.checkpoint = "Checkpoints/rnn_train_1510277210-21000000" #4 hours training hearthstone cards
