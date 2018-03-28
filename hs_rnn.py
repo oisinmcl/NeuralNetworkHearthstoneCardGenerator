@@ -24,7 +24,8 @@ class Neural_Network:
 		self.learningRate = 0.001  # fixed learning rate
 		self.dropout_pkeep = 0.8    # some dropout
 		self.trainingDataPath = 'training_data'
-		self.trainingDataDir = self.trainingDataPath+'/*.txt'
+		self.trainingDataExt = '/*.txt'
+		self.trainingDataDir = self.trainingDataPath+self.trainingDataExt
 		self.epochs = 10
 		
 		self.checkpoint = "Checkpoints/rnn_train_1510277210-21000000" #4 hours training hearthstone cards
@@ -35,7 +36,7 @@ class Neural_Network:
 		ncnt = 0
 	
 		# load data, either shakespeare, or the Python source of Tensorflow itself
-		codetext, valitext, bookranges = self.txt.read_data_files(self.trainingDataDir, validation=True)
+		codetext, valitext, bookranges = self.txt.read_data_files(self.trainingDataPath+self.trainingDataExt, validation=True)
 
 		# display some stats on the data
 		epoch_size = len(codetext) // (self.batchSize * self.seqLength)

@@ -6,14 +6,17 @@ from kivy.uix.label import Label
 from kivy.uix.popup import Popup 
 from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
+from kivy.uix.widget import Widget
 from kivy.uix.filechooser import FileChooserIconView 
+from kivy.uix.behaviors import ButtonBehavior
 
 from kivy.properties import NumericProperty, ObjectProperty, ListProperty, StringProperty
 
 from kivy.graphics.context_instructions import Color
 from kivy.graphics.vertex_instructions import Rectangle
 
-
+import os
 
 #from kivy.core.window import Window
 
@@ -62,11 +65,32 @@ class HSTextInput(TextInput):
 	font_size = NumericProperty(18)
 	background_color = ListProperty([1, 1, 1, 0.5])
 	#background_normal = ObjectProperty('Resources/Buttons/SmallButton.png')
-	multiline=False
+	
 	
 	#tooltiptext = ""
 	#toolTip = ToolTip( text=tooltiptext)
+	multiline=False
+
+class HSDirInput(ButtonBehavior, HSTextInput):
+	foreground_color = ListProperty([0.20,0.18,0.02,0.8])
+	font_name = ObjectProperty('Resources/Fonts/BelweBdBTBold.ttf')
+	font_size = NumericProperty(18)
+	background_color = ListProperty([1, 1, 1, 0.5])
+	#background_normal = ObjectProperty('Resources/Buttons/SmallButton.png')
+	multiline=False
+	#tooltiptext = ""
+	#toolTip = ToolTip( text=tooltiptext)
 	
+	def on_press(self):
+		print('HSDirInput pushed')
+		
+	'''
+	def __init__(self, **kwargs):
+		super(MyButton, self).__init__(**kwargs)
+
+	
+
+	'''
 	
 class HSNumericInput(TextInput):
 	foreground_color = ListProperty([0.20,0.18,0.02,0.8])
@@ -135,39 +159,67 @@ class HSConfirmPopup(Popup):
 		hsbutton.bind(on_press=mypopup.dismiss)		
 		mypopup.open()
 		
-class HSFileChooserPopup(Popup):
+class HSFileChooserPopup(Widget):
 	#foreground_color = ListProperty([0.20,0.18,0.02,0.8])
 	#background_color = ListProperty([ 0.4, 0.37, 0.32, 0.8])
 	#font_name = ObjectProperty('Resources/Fonts/BelweBdBTBold.ttf')
 	#font_size = NumericProperty(18)
 	
-	def __init__(self, _title, _path):
-		self.selectedDir = _path
+	selectedDir =  os.getcwd()
+	OKselectedDir = ''
+	
+	def __init__(self, **kwargs):
+		print('HSFileChooserPopup created')
+		
+	def show(self, _title, _path):
+		selectedDir = _path
+		OKselectedDir = ''
 	
 		content = BoxLayout(orientation = 'vertical', 
 							padding = (10),
 							spacing= 20)
-		self.filechooser = FileChooserIconView(id= 'dataPicker',
-										path = self.selectedDir,
+							
+		filechooser = FileChooserIconView(id= 'dataPicker',
+										path = selectedDir,
 										dirselect= True,
 										size = self.size)			
-		content.add_widget(self.filechooser)
+		content.add_widget(filechooser)
 		
-		hsbutton = HSButton(text = "OK!", size_hint=(.4,.2),pos_hint= {'x': .3,'top': 0})
-		content.add_widget(hsbutton)
+		btncontent = BoxLayout(orientation = 'horizontal', 
+							padding = (10),
+							spacing= 20,
+							size_hint=(.5,0.2),
+							pos_hint={'x': 0.25, 'center_y': 0})
 		
-		self.mypopup = Popup(content = content,              
+		ok = HSButton(text = "OK!", size_hint=(1,1))
+		cancel = HSButton(text = "Cancel!", size_hint=(1,1))
+		
+		btncontent.add_widget(ok)
+		btncontent.add_widget(cancel)
+		
+		content.add_widget(btncontent)
+		
+		mypopup = Popup(content = content,              
 							title = _title,
 							title_font = 'Resources/Fonts/Belwe-Medium.ttf',
 							auto_dismiss = False,
 							#size_hint=(.5, .35),
 							separator_color = [247/255,143/255,46/255,1])
 		
-		hsbutton.bind(on_press=self.exitPopup)		
-		self.mypopup.open()
-	
-	def exitPopup(self):
+		ok.bind(on_release=mypopup.dismiss)
+		cancel.bind(on_release=mypopup.dismiss)			
+		mypopup.open()
+
+	'''
+	def OKselectPath(self, instance):
+		print('OK!')
 		print(self.filechooser.path)
-		self.selectedDir = self.filechooser.path
+		self.OKselectedDir = self.filechooser.path
+		#self.mypopup.dismiss()
+	
+	def CancelSelectPath(self, instance):
+		print('Cancel!')
 		self.mypopup.dismiss()
-		
+		print('After dismiss')
+
+		'''

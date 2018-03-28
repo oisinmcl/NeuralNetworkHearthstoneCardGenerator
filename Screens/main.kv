@@ -98,14 +98,15 @@
 						HSLabel:
 							text: 'Data Directory'
 							size_hint_x: .5	
-							pos: self.parent.pos						
+							pos: self.parent.pos
+							##on_release: root.showFileChooser()
 							
-						HSTextInput: 	
+						HSDirInput: 	
 							text:  str(root.dataPath)
 							on_text: root.dataPathChange(self.text)
 							##size: self.parent.size  
 							pos: self.parent.pos
-							on_focus: root.showFileChooser()
+							on_release: root.showFileChooser()
 							
 							
 						HSLabel:

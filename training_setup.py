@@ -29,6 +29,8 @@ class Training_Setup(Screen):
 		self.epochs = str(self.nn.epochs)
 		self.popup = HSConfirmPopup()
 		self.dataPath = str(self.nn.trainingDataPath)
+		
+		#self.dirPicker = HSFileChooserPopup()
 
 	def nLayersChange(self, button):
 		#updates nlayers var in nn to text input value
@@ -76,19 +78,20 @@ class Training_Setup(Screen):
 		
 
 		
-	def dataPathChange(self, buttonText):
+	def dataPathChange(self, widgetText):
 		#updates trainingDataPath var in nn to text input value
-		if len(buttonText) > 0:
+		if len(widgetText) > 0:
 			try: 
-				self.nn.trainingDataPath = buttonText
+				self.nn.trainingDataPath = widgetText
 			except ValueError:
 				self.popup.show('Error', "Invalid data in Training Data Path")
 			except:
 				self.popup.show('Error', "An unexpected error in Training Data Path")	
 	
 	def showFileChooser(self):
-		dirPicker = HSFileChooserPopup('Choose Training Data Location', os.getcwd())
-		self.dataPathChange(dirPicker.selectedDir)
+		dirPicker = HSFileChooserPopup()
+		dirPicker.show('Choose Training Data Location', os.getcwd())
+		self.dataPathChange(dirPicker.OKselectedDir)
 	
 	def showNNStats(self):
 		self.popup.show('Test Title', 'Network nLayers: ' + str(self.nn.nLayers) + "\n" + 
@@ -98,6 +101,8 @@ class Training_Setup(Screen):
 									'Data Path: ' + str(self.nn.trainingDataPath) + "\n")
 		
 		print('Data Path: ' + str(self.nn.trainingDataPath) )
+		print('Data Path: ' + str(self.nn.trainingDataDir) )
+	
 	def StartTraining(self):
 		self.nn.startTraining()
 		
