@@ -64,11 +64,11 @@ class myApp(App):
 		
 	
 	def build(self):
-		logger.info('Appication Building')
+		logger.info('*****************Application Building*****************')
 		return sm
 		
 	def on_stop(self):
-		logger.info('Appication Closed')
+		logger.info('*****************Application Closed*****************')
 
 if __name__ == '__main__':
 	myApp().run()

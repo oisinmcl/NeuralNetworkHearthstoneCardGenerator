@@ -9,6 +9,11 @@ from CustomWidgets import HSConfirmPopup
 
 import threading
 
+import logging
+
+# create logger
+module_logger = logging.getLogger('myApp')
+
 
 class Generate_Setup(Screen):
 	nLayers = StringProperty()

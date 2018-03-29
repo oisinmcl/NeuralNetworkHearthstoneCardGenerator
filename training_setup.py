@@ -119,14 +119,16 @@ class Training_Setup(Screen):
 		print('Data Path: ' + str(self.nn.trainingDataDir) )
 	
 	def StartTraining(self):
+		module_logger.info('Training Thread Started')
 		self.nn.startTraining()
-		module_logger.info('Training Started')
+		
 		
 	def btnStartTraining(self, button):
+		module_logger.info('Creating new thread for training')
 		#event from button, starts new thread for StartTraining function
 		thread = threading.Thread(target=self.StartTraining, args=())
 		#thread.daemon = True # Daemonize thread
 		thread.start()
-		module_logger.info('New thread created for training')
+
 		
 		

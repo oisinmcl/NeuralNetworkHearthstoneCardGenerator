@@ -221,7 +221,12 @@ class Data_Tools:
 		valilen_kb = valilen/1024.0
 		print("Training text size is {:.2f}MB with {:.2f}KB set aside for validation.".format(datalen_mb, valilen_kb)
 			  + " There will be {} batches per epoch".format(epoch_size))
-
+	
+	def data_stats(self,datalen, valilen, epoch_size):
+		datalen_mb = datalen/1024.0/1024.0
+		valilen_kb = valilen/1024.0
+		return ("Training text size is {:.2f}MB with {:.2f}KB set aside for validation.".format(datalen_mb, valilen_kb)
+			  + " There will be {} batches per epoch".format(epoch_size))
 
 	def print_validation_header(self,validation_start, bookranges):
 		bookindex = find_book_index(validation_start, bookranges)

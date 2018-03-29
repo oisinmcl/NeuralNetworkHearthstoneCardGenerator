@@ -3,6 +3,11 @@ kivy.require('1.10.0')
 
 from kivy.uix.screenmanager import Screen
 
+import logging
+
+# create logger
+module_logger = logging.getLogger('myApp')
+
 
 class Card_Manager(Screen):
 

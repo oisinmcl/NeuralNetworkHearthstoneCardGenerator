@@ -8,6 +8,11 @@ import numpy as np
 from data_tools import Data_Tools
 from data_tools import Progress
 
+import logging
+
+# create logger
+module_logger = logging.getLogger('myApp')
+
 
 class Neural_Network:
 
@@ -33,15 +38,18 @@ class Neural_Network:
 
 
 	def startTraining(self):
+		module_logger.info('Training started')
 		ncnt = 0
-	
+		
+		module_logger.info('Loading training data files')
 		# load data, either shakespeare, or the Python source of Tensorflow itself
 		codetext, valitext, bookranges = self.txt.read_data_files(self.trainingDataPath+self.trainingDataExt, validation=True)
 
 		# display some stats on the data
 		epoch_size = len(codetext) // (self.batchSize * self.seqLength)
 		self.txt.print_data_stats(len(codetext), len(valitext), epoch_size)
-
+		module_logger.info(str(self.txt.data_stats(len(codetext), len(valitext), epoch_size)))
+		
 		#
 		# the model (see FAQ in README.md)
 		#
@@ -124,14 +132,16 @@ class Neural_Network:
 		step = 0
 		
 		# training loop
+		module_logger.info('Training loop started')
 		for x, y_, epoch in self.batch_sequencer(codetext, self.batchSize, self.seqLength, self.epochs):
-
+			
 			# train on one minibatch
 			feed_dict = {X: x, Y_: y_, Hin: istate, lr: self.learningRate, pkeep: self.dropout_pkeep, batchsize: self.batchSize}
 			_, y, ostate = sess.run([train_step, Y, H], feed_dict=feed_dict)
 
 			# log training data for Tensorboard display a mini-batch of sequences (every 50 batches)
 			if step % _50_BATCHES == 0:
+				module_logger.info('Logging training data for Tensorboard display')
 				feed_dict = {X: x, Y_: y_, Hin: istate, pkeep: 1.0, batchsize: self.batchSize}  # no dropout for validation
 				y, l, bl, acc, smm = sess.run([Y, seqloss, batchloss, accuracy, summaries], feed_dict=feed_dict)
 				self.txt.print_learning_learned_comparison(x, y, l, bookranges, bl, acc, epoch_size, step, epoch)
@@ -142,6 +152,7 @@ class Neural_Network:
 			# so we cut it up and batch the pieces (slightly inaccurate)
 			# tested: validating with 5K sequences instead of 1K is only slightly more accurate, but a lot slower.
 			if step % _50_BATCHES == 0 and len(valitext) > 0:
+				module_logger.info('Running validation step')
 				VALI_self.seqLength = 1*1024  # Sequence length for validation. State will be wrong at the start of each sequence.
 				bsize = len(valitext) // VALI_self.seqLength
 				self.txt.print_validation_header(len(codetext), bookranges)
@@ -156,6 +167,7 @@ class Neural_Network:
 
 			# display a short text generated with the current weights and biases (every 150 batches)
 			if step // 3 % _50_BATCHES == 0:
+				module_logger.info('Displaying sample text generation')
 				self.txt.print_text_generation_header()
 				ry = np.array([[self.txt.encodeChar(ord("K"))]])
 				rh = np.zeros([1, self.internalSize * self.nLayers])
@@ -170,6 +182,7 @@ class Neural_Network:
 			if step // 10 % _50_BATCHES == 0:
 				saved_file = saver.save(sess, 'Checkpoints/rnn_train_' + timestamp, global_step=step)
 				print("Saved file: " + saved_file)
+				module_logger.info('Saved file: ' + saved_file)
 
 			# display progress bar
 			progress.step(reset=step % _50_BATCHES == 0)
@@ -180,6 +193,8 @@ class Neural_Network:
 		
 		
 	def StartGenerating(self, numOfChars):
+		
+		module_logger.info('Starting to generate text, will generate ' + numOfChars+ 'characters' )
 		with tf.Session() as sess:
 			new_saver = tf.train.import_meta_graph(self.checkpoint + '.meta')
 			new_saver.restore(sess, self.checkpoint)
@@ -187,11 +202,13 @@ class Neural_Network:
 			x = np.array([[x]])  # shape [self.batchSize, self.seqLength] with self.batchSize=1 and self.seqLength=1
 			ncnt = 0
 			self.outputfile = "Output_data/output_" +str(math.trunc(time.time()))+".txt"
+			module_logger.info('Generating to file: ' + self.outputfile)
 			file = open(self.outputfile, "w+")
 			# initial values
 			y = x
 			h = np.zeros([1, self.internalSize * self.nLayers], dtype=np.float32)  # [ self.batchSize, self.internalSize * self.nLayers]
 			for i in range(numOfChars):
+				
 				yo, h = sess.run(['Yo:0', 'H:0'], feed_dict={'X:0': y, 'pkeep:0': 1., 'Hin:0': h, 'batchsize:0': 1})
 
 				# If sampling is be done from the topn most likely characters, the generated text
@@ -214,6 +231,7 @@ class Neural_Network:
 					print("")
 					ncnt = 0
 			file.close
+			module_logger.info('Generating Complete')
 			
 	def batch_sequencer(self, raw_data, batch_size, sequence_size, nb_epochs):
 		data = np.array(raw_data)
