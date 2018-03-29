@@ -9,6 +9,9 @@ class Card_Manager(Screen):
 			   
 	def __init__(self, **kwargs): 
 		super(Card_Manager, self).__init__(**kwargs)
+		
+	def on_enter(self):
+		module_logger.info('Screen changed to :	'+ self.name)
 
 		
 		

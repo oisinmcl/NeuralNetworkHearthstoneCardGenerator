@@ -26,7 +26,8 @@ class Generate_Setup(Screen):
 		self.epochs = str(self.nn.epochs)
 		self.popup = HSConfirmPopup()
 		
-          
+	def on_enter(self):
+		module_logger.info('Screen changed to :	'+ self.name)          
 
 	def nLayersChange(self, button):
 		#updates nlayers var in nn to text input value

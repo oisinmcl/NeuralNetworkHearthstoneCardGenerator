@@ -17,10 +17,10 @@ from kivy.graphics.context_instructions import Color
 from kivy.graphics.vertex_instructions import Rectangle
 
 import os
-
-#from kivy.core.window import Window
-
 import re
+import logging
+
+module_logger = logging.getLogger('myApp')
 
 class HSButton(Button):
 	background_normal = ObjectProperty('Resources/Buttons/SmallButton.png')
@@ -148,7 +148,7 @@ class HSConfirmPopup(Popup):
 		
 		hsbutton = HSButton(text = "OK!", size_hint=(.5,.75),pos_hint= {'x': .25,'top': 0})
 		content.add_widget(hsbutton)
-		
+		module_logger.error(mytext)	
 		mypopup = Popup(content = content,              
                 title = _title,
 				title_font = 'Resources/Fonts/Belwe-Medium.ttf',
@@ -156,6 +156,10 @@ class HSConfirmPopup(Popup):
 				size_hint=(.5, .35),
 				separator_color = [247/255,143/255,46/255,1])
 		
+		if  _title.upper() == 'ERROR':
+			module_logger.error(mytext)
+
+			
 		hsbutton.bind(on_press=mypopup.dismiss)		
 		mypopup.open()
 		

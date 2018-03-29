@@ -14,6 +14,31 @@ from training_setup import Training_Setup
 from generate_setup import Generate_Setup
 from card_manager import Card_Manager
 
+import logging
+import datetime
+
+
+
+# create logger with 'myApp'
+logger = logging.getLogger('myApp')
+logger.setLevel(logging.DEBUG)
+# create file handler which logs even debug messages
+fh = logging.FileHandler('log/log_' + str(datetime.datetime.now().date()) + '.log')
+fh.setLevel(logging.DEBUG)
+# create console handler with a higher log level
+ch = logging.StreamHandler()
+ch.setLevel(logging.ERROR)
+# create formatter and add it to the handlers
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+fh.setFormatter(formatter)
+ch.setFormatter(formatter)
+# add the handlers to the logger
+logger.addHandler(fh)
+logger.addHandler(ch)
+
+logger.info('Appication started')
+
+#app specific config
 Config.read('config.ini')
 Builder.load_file('Screens/main.kv')
 
@@ -39,10 +64,12 @@ class myApp(App):
 		
 	
 	def build(self):
+		logger.info('Appication Building')
 		return sm
 		
-
+	def on_stop(self):
+		logger.info('Appication Closed')
 
 if __name__ == '__main__':
-     myApp().run()
+	myApp().run()
 	 

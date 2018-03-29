@@ -20,4 +20,5 @@ Classes:
 	Card
 	data tools ***Started***
 	hsNN (Should this be multi process)
+	logger
 	
