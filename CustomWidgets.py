@@ -138,6 +138,7 @@ class HSConfirmPopup(Popup):
 	
 	def show(self, _title, _text):
 		mytext = _text
+		mytitle = _title
 		content = BoxLayout(orientation = 'vertical', 
 							padding = (10),
 							spacing= 20)
@@ -150,13 +151,13 @@ class HSConfirmPopup(Popup):
 		content.add_widget(hsbutton)
 		module_logger.error(mytext)	
 		mypopup = Popup(content = content,              
-                title = _title,
+                title = mytitle,
 				title_font = 'Resources/Fonts/Belwe-Medium.ttf',
                 auto_dismiss = False,
 				size_hint=(.5, .35),
 				separator_color = [247/255,143/255,46/255,1])
 		
-		if  _title.upper() == 'ERROR':
+		if  mytitle.upper() == 'ERROR':
 			module_logger.error(mytext)
 
 			
@@ -237,7 +238,7 @@ class HSFileChooserPopup(Popup):
 	
 	def __init__(self, my_widget, **kwargs):
 		super(HSFileChooserPopup,self).__init__(**kwargs)
-		print('HSFileChooserPopup created')
+		#print('HSFileChooserPopup created')
 		
 		self.my_widget = my_widget
 		

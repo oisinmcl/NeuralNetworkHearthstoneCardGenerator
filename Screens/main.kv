@@ -71,12 +71,19 @@
 			pos: self.parent.pos  
 			orientation: 'vertical'
 			
+			HSLabel:
+				size: self.parent.size  
+				pos: self.parent.pos  
+				font_size: 30
+				text: 'Training Setup'
+				size_hint_y: 0.1
 
+				
 			BoxLayout:
 				size: self.parent.size  
 				pos: self.parent.pos  
 				orientation: 'horizontal'
-				padding: 100
+				padding: 50
 				spacing: 20
 				
 				BoxLayout:
@@ -89,6 +96,11 @@
 					size: self.parent.size  
 					pos: self.parent.pos  
 					orientation: 'vertical'
+									
+					HSLabel:
+						size_hint_x: .5	
+						size_hint_y: .1
+						text: 'Training Data Stats'
 					
 					GridLayout:
 						cols: 2
@@ -134,18 +146,21 @@
 							hint_text: 'Total Data Size'
 							size: self.parent.size  
 							pos: self.parent.pos						
+					
 							
-						HSLabel:
-							text: 'label 4'	
+						HSButton:
+							text: 'Get Latest Cards'
+							font_size: 12
 							size: self.parent.size  
 							pos: self.parent.pos						
-							size_hint_x: .5	
+							on_release: root.getLastestCards()
 							
-						HSTextInput: 	
-							text: 'Text 4'
+						HSButton: 	
+							text: 'Get Cards by Parameter'
+							font_size: 12
 							size: self.parent.size  
 							pos: self.parent.pos
-							size_hint_x: .5			
+							on_release: root.getCardsByParam()								
 						
 				BoxLayout:
 					canvas.before:
@@ -158,6 +173,11 @@
 					size: self.parent.size  
 					pos: self.parent.pos  
 					orientation: 'vertical'
+					
+					HSLabel:
+						size_hint_x: .5	
+						size_hint_y: .1
+						text: 'Neural Network Stats'
 					
 					GridLayout:
 						cols: 2

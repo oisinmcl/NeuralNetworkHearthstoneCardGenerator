@@ -8,6 +8,7 @@ from hs_rnn import Neural_Network
 from CustomWidgets import HSConfirmPopup, HSFileChooserPopup
 
 from data_tools import Data_Tools
+from hearthstoneAPI import HearthstoneAPI
 
 import threading
 import os
@@ -32,6 +33,7 @@ class Training_Setup(Screen):
 		super(Training_Setup, self).__init__(**kwargs)
 		#module_logger.info('Training_Setup Initialized')
 		self.txt = Data_Tools()
+		self.api = HearthstoneAPI()
 		
 		self.nn = _nn
 		self.nLayers = str(self.nn.nLayers)
@@ -123,7 +125,8 @@ class Training_Setup(Screen):
 	def showFileChooser(self):
 		#dirPicker = HSFileChooserPopup()
 		self.dirPicker.show('Choose Training Data Location', os.getcwd())
-		self.dataPath = self.dirPicker.OKselectedDir 
+		if len(self.dirPicker.OKselectedDir) > 0:
+			self.dataPath = self.dirPicker.OKselectedDir 
 	
 	def showNNStats(self):
 		self.popup.show('Test Title', 'Network nLayers: ' + str(self.nn.nLayers) + "\n" + 
@@ -138,6 +141,30 @@ class Training_Setup(Screen):
 	def testingFunction(self):
 		numOfFiles =int(numOfFiles) + 1
 		print ("numOfFiles: "+str(numOfFiles))
+		
+	def getLastestCards(self):
+		try:
+			status = self.api.getLastestSet()
+			self.updateTrainingDataStats()
+			if status == 200:
+				self.popup.show('Success', 'Cards Downloaded To ' + self.dataPath)
+			else:
+				self.popup.show('Error', 'There was a HTTP error getting cards')
+		except Exception:
+			self.popup.show('Error', 'Error getting lastest cards.')				
+		
+	def getCardsByParam(self, param='Sets', id='Basic'):
+		try:
+			status = self.api.getCardsByParam(param, id)
+			self.updateTrainingDataStats()
+			
+			if status == 200:
+				self.popup.show('Success', 'Cards Downloaded To ' + self.dataPath)
+			else:
+				self.popup.show('Error', 'There was a HTTP error getting cards')
+			
+		except Exception:
+			self.popup.show('Error', 'Error getting cards by parameter.')				
 		
 	def updateTrainingDataStats(self):
 		self.numOfFiles = str(self.txt.countNumberOfFiles(self.dataPath))
