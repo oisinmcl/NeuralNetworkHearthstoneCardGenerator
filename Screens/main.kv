@@ -275,7 +275,7 @@
 <Generate_Setup>:
 	name: 'Generate_Setup'
 	RelativeLayout:
-		title: 'Training Setup'
+		title: 'Generate Setup'
 		canvas:
 			Color:
 				rgb: 1, 1, 1
@@ -289,12 +289,19 @@
 			pos: self.parent.pos  
 			orientation: 'vertical'
 			
+			HSLabel:
+				size: self.parent.size  
+				pos: self.parent.pos  
+				font_size: 30
+				text: 'Generate Setup'
+				size_hint_y: 0.1
 
+				
 			BoxLayout:
 				size: self.parent.size  
 				pos: self.parent.pos  
 				orientation: 'horizontal'
-				padding: 100
+				padding: 50
 				spacing: 20
 				
 				BoxLayout:
@@ -307,6 +314,11 @@
 					size: self.parent.size  
 					pos: self.parent.pos  
 					orientation: 'vertical'
+									
+					HSLabel:
+						size_hint_x: .5	
+						size_hint_y: .1
+						text: 'Data Stats'
 					
 					GridLayout:
 						cols: 2
@@ -314,48 +326,32 @@
 						spacing: 20
 						
 						HSLabel:
-							text: 'label 1'
-							size: self.parent.size  
-							pos: self.parent.pos						
-							
-						HSTextInput: 	
-							text: 'Text 1'
-							size: self.parent.size  
-							pos: self.parent.pos
-							size_hint_x: .5								
-							
-						HSLabel:
-							text: 'label 2'	
-							size: self.parent.size  
-							pos: self.parent.pos						
-							
-						HSTextInput: 	
-							text: 'Text 2'
-							size: self.parent.size  
-							pos: self.parent.pos						
+							text: 'Output Directory'
 							size_hint_x: .5	
-							
-						HSLabel:
-							text: 'label 3'
-							size: self.parent.size  
-							pos: self.parent.pos						
-							
-						HSTextInput: 	
-							text: 'Text 3'
-							size: self.parent.size  
-							pos: self.parent.pos						
-							
-						HSLabel:
-							text: 'label 4'	
-							size: self.parent.size  
-							pos: self.parent.pos						
-							size_hint_x: .5	
-							
-						HSTextInput: 	
-							text: 'Text 4'
-							size: self.parent.size  
 							pos: self.parent.pos
-							size_hint_x: .5			
+							##on_release: root.showFileChooser()
+							
+						HSDirInput: 	
+							text:  str(root.outputDir)
+							on_text: root.outputPathChange(self.text)
+							##size: self.parent.size  
+							pos: self.parent.pos
+							on_release: root.showOutputDirChooser()
+
+						HSLabel:
+							text: 'Num of Chars'
+							size_hint_x: .5	
+							pos: self.parent.pos
+							##on_release: root.showFileChooser()
+							
+						HSNumericInput: 	
+							text:  str(root.numOfChars)
+							on_text: root.numOfCharsChange(self)
+							##size: self.parent.size  
+							pos: self.parent.pos
+
+							
+					
 						
 				BoxLayout:
 					canvas.before:
@@ -369,10 +365,28 @@
 					pos: self.parent.pos  
 					orientation: 'vertical'
 					
+					HSLabel:
+						size_hint_x: .5	
+						size_hint_y: .1
+						text: 'Neural Network Stats'
+					
 					GridLayout:
 						cols: 2
 						padding: 10 
 						spacing: 20
+						
+						HSLabel:
+							text: 'Checkpoint File'
+							size_hint_x: .5	
+							pos: self.parent.pos
+							##on_release: root.showFileChooser()
+							
+						HSDirInput: 	
+							text:  str(root.checkpointFile)
+							on_text: root.checkpointFileChange(self.text)
+							##size: self.parent.size  
+							pos: self.parent.pos
+							on_release: root.showCheckpointFileChooser()		
 						
 						HSLabel:
 							text: 'Number of Layers: '
@@ -406,38 +420,10 @@
 							max: 2048						
 							size: self.parent.size  
 							pos: self.parent.pos
-							size_hint_x: .5								
+							size_hint_x: .5			
 							
-						HSLabel:
-							text: 'Learning Rate: '
-							size: self.parent.size  
-							pos: self.parent.pos						
 							
-						HSNumericInput: 
-							id: txt_learningRateID
-							text:  str(root.learningRate)
-							hint_text: 'Learning Rate'
-							on_text: root.learningRateChange(self)
-							min: 0.00001
-							max: 0.5
-							size: self.parent.size  
-							pos: self.parent.pos						
-							size_hint_x: .5		
-							
-						HSLabel:
-							text: 'Epochs: '	
-							size: self.parent.size  
-							pos: self.parent.pos						
-							
-						HSNumericInput: 
-							id: txt_epochID
-							text:  str(root.epochs)
-							hint_text: 'Epochs'
-							on_text: root.epochsChange(self)
 
-							size: self.parent.size  
-							pos: self.parent.pos						
-							size_hint_x: .5		
 			GridLayout:
 				cols: 3
 				size_hint_y: .3
@@ -454,9 +440,10 @@
 					BoxLayout:
 					BoxLayout:
 				HSButton:
-					text: 'Start Training'
+					text: 'Start Generating'
 					##on_release: app.trainingSetup.btnStartTraining(self)
-					on_release: root.showNNStats()
+					##on_release: root.showNNStats()
+					on_release: root.btnStartGenerating(self)
 				BoxLayout:
 				BoxLayout:
 				BoxLayout:	

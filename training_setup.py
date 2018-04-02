@@ -170,8 +170,8 @@ class Training_Setup(Screen):
 		self.numOfFiles = str(self.txt.countNumberOfFiles(self.dataPath))
 		self.fileSizes = self.txt.convert_bytes(self.txt.calcFileSizes(self.dataPath))
 		#self.fileSizes = str(self.txt.calcFileSizes(self.dataPath))
-		print ("numOfFiles: "+str(self.numOfFiles))
-		print ("fileSizes: "+str(self.fileSizes))
+		#print ("numOfFiles: "+str(self.numOfFiles))
+		#print ("fileSizes: "+str(self.fileSizes))
 	
 
 	def StartTraining(self):

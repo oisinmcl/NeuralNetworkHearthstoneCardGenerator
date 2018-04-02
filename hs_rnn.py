@@ -33,8 +33,11 @@ class Neural_Network:
 		self.trainingDataDir = self.trainingDataPath+self.trainingDataExt
 		self.epochs = 10
 		
-		self.checkpoint = "Checkpoints/rnn_train_1510277210-21000000" #4 hours training hearthstone cards
-		self.outputfile = "output.txt"
+		self.checkpoint = 'Checkpoints/rnn_train_1510277210-21000000' #4 hours training hearthstone cards
+		self.outputDir = 'Output_data'
+		self.outputfile = 'output.txt'
+		
+		self.numOfChars = 10000
 
 
 	def startTraining(self):
@@ -192,22 +195,22 @@ class Neural_Network:
 			step += self.batchSize * self.seqLength
 		
 		
-	def StartGenerating(self, numOfChars):
+	def StartGenerating(self):
 		
-		module_logger.info('Starting to generate text, will generate ' + numOfChars+ 'characters' )
+		module_logger.info('Starting to generate text, will generate ' + str(self.numOfChars)+ ' characters' )
 		with tf.Session() as sess:
 			new_saver = tf.train.import_meta_graph(self.checkpoint + '.meta')
 			new_saver.restore(sess, self.checkpoint)
 			x = self.txt.encodeChar(ord("L"))
 			x = np.array([[x]])  # shape [self.batchSize, self.seqLength] with self.batchSize=1 and self.seqLength=1
 			ncnt = 0
-			self.outputfile = "Output_data/output_" +str(math.trunc(time.time()))+".txt"
+			self.outputfile = self.outputDir+"/output_" +str(math.trunc(time.time()))+".txt"
 			module_logger.info('Generating to file: ' + self.outputfile)
 			file = open(self.outputfile, "w+")
 			# initial values
 			y = x
 			h = np.zeros([1, self.internalSize * self.nLayers], dtype=np.float32)  # [ self.batchSize, self.internalSize * self.nLayers]
-			for i in range(numOfChars):
+			for i in range(self.numOfChars):
 				
 				yo, h = sess.run(['Yo:0', 'H:0'], feed_dict={'X:0': y, 'pkeep:0': 1., 'Hin:0': h, 'batchsize:0': 1})
 
