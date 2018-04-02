@@ -44,12 +44,17 @@ class Neural_Network:
 		module_logger.info('Training started')
 		ncnt = 0
 		
-		module_logger.info('Loading training data files')
-		# load data, either shakespeare, or the Python source of Tensorflow itself
-		codetext, valitext, bookranges = self.txt.read_data_files(self.trainingDataPath+self.trainingDataExt, validation=True)
-
+		try:
+			module_logger.info('Loading training data files')
+			# load data, either shakespeare, or the Python source of Tensorflow itself
+			codetext, valitext, bookranges = self.txt.read_data_files(self.trainingDataPath+self.trainingDataExt, validation=True)
+		except Exception:
+			module_logger.error('Error Loading Training data files')
+			
 		# display some stats on the data
+		module_logger.info('calc epoch_size')
 		epoch_size = len(codetext) // (self.batchSize * self.seqLength)
+		module_logger.info('printing stats on data')
 		self.txt.print_data_stats(len(codetext), len(valitext), epoch_size)
 		module_logger.info(str(self.txt.data_stats(len(codetext), len(valitext), epoch_size)))
 		
@@ -156,10 +161,10 @@ class Neural_Network:
 			# tested: validating with 5K sequences instead of 1K is only slightly more accurate, but a lot slower.
 			if step % _50_BATCHES == 0 and len(valitext) > 0:
 				module_logger.info('Running validation step')
-				VALI_self.seqLength = 1*1024  # Sequence length for validation. State will be wrong at the start of each sequence.
-				bsize = len(valitext) // VALI_self.seqLength
+				VALI_SEQLEN = 1*1024  # Sequence length for validation. State will be wrong at the start of each sequence.
+				bsize = len(valitext) // VALI_SEQLEN
 				self.txt.print_validation_header(len(codetext), bookranges)
-				vali_x, vali_y, _ = next(self.txt.rnn_minibatch_sequencer(valitext, bsize, VALI_self.seqLength, 1))  # all data in 1 batch
+				vali_x, vali_y, _ = next(self.batch_sequencer(valitext, bsize, VALI_SEQLEN, 1))  # all data in 1 batch
 				vali_nullstate = np.zeros([bsize, self.internalSize*self.nLayers])
 				feed_dict = {X: vali_x, Y_: vali_y, Hin: vali_nullstate, pkeep: 1.0,  # no dropout for validation
 							 batchsize: bsize}

@@ -256,7 +256,7 @@ class Data_Tools:
 			  + " There will be {} batches per epoch".format(epoch_size))
 
 	def print_validation_header(self,validation_start, bookranges):
-		bookindex = find_book_index(validation_start, bookranges)
+		bookindex = self.find_book_index(validation_start, bookranges)
 		books = ''
 		for i in range(bookindex, len(bookranges)):
 			books += bookranges[i]["name"]

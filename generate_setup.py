@@ -82,13 +82,13 @@ class Generate_Setup(Screen):
 		#updates trainingDataPath var in nn to text input value
 		if len(widgetText) > 0:
 			try: 
-				if not self.nn.trainingDataPath == widgetText:
-					self.nn.trainingDataPath = widgetText
-					module_logger.info('trainingDataPath value changed to: ' + str(self.nn.trainingDataPath))
+				if not self.nn.checkpoint == widgetText:
+					self.nn.checkpoint = widgetText
+					module_logger.info('checkpoint value changed to: ' + str(self.nn.checkpoint))
 			except ValueError:
-				self.popup.show('Error', "Invalid data in Training Data Path. Error: "+ str(traceback.format_exc()))
+				self.popup.show('Error', "Invalid data in checkpoint. Error: "+ str(traceback.format_exc()))
 			except:
-				self.popup.show('Error', "An unexpected error updating Training Data Path value. Error: "+ str(traceback.format_exc()))		
+				self.popup.show('Error', "An unexpected error updating checkpoint file value. Error: "+ str(traceback.format_exc()))		
 	
 	def showCheckpointFileChooser(self):
 		#dirPicker = HSFileChooserPopup()
