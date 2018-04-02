@@ -16,6 +16,8 @@
 import numpy as np
 import glob
 import sys
+import os
+import math
 
 
 
@@ -99,6 +101,31 @@ class Data_Tools:
 		p = p / np.sum(p)
 		return np.random.choice(self.alphabetSize, 1, p=p)[0]
 
+	def convert_bytes(self,size_bytes):
+		if size_bytes == 0:
+			return "0B"
+		size_name = ("B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
+		i = int(math.floor(math.log(size_bytes, 1024)))
+		p = math.pow(1024, i)
+		s = round(size_bytes / p, 2)
+		return "%s %s" % (s, size_name[i])	
+		
+	
+	def countNumberOfFiles(self, _path):
+		numOfFiles = len([name for name in os.listdir(_path) if os.path.isfile(os.path.join(_path, name))])
+		return numOfFiles
+		
+	def calcFileSizes(self, path='.'):
+		total = 0
+		for entry in os.scandir(path):
+			if entry.is_file():
+				total += entry.stat().st_size
+			elif entry.is_dir():
+				total += folder_size(entry.path)
+		return total
+		
+		
+		
 
 	def find_book(self, index, bookranges):
 		return next(
@@ -257,6 +284,8 @@ class Data_Tools:
 		def limit(i):
 			return i % (multiple * n) == modulo*multiple
 		return limit
+		
+		
 	
 class Progress:
     """Text mode progress bar.
@@ -308,3 +337,6 @@ class Progress:
                 yield k
 
         return print_progress	
+		
+
+	

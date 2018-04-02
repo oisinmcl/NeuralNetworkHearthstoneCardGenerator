@@ -110,23 +110,28 @@
 							
 							
 						HSLabel:
-							text: 'label 2'	
+							text: 'Number of Files'	
 							size_hint_x: .5	 
 							pos: self.parent.pos						
 							
-						HSTextInput: 	
-							text: 'Text 2'
+						HSTextInput: 
+							id: txt_numOfFiles
+							text: str(root.numOfFiles)
+							hint_text: 'Number of training files'	
 							size: self.parent.size  
-							pos: self.parent.pos						
+							pos: self.parent.pos
+							active: False							
 							
 							
 						HSLabel:
-							text: 'label 3'
+							text: 'Total Data Size'
 							size: self.parent.size  
 							pos: self.parent.pos						
 							
-						HSTextInput: 	
-							text: 'Text 3'
+						HSTextInput: 
+							id: txt_DataSize
+							text: str(root.fileSizes)
+							hint_text: 'Total Data Size'
 							size: self.parent.size  
 							pos: self.parent.pos						
 							
@@ -240,8 +245,9 @@
 					BoxLayout:
 				HSButton:
 					text: 'Start Training'
-					on_release: app.trainingSetup.btnStartTraining(self)
+					##on_release: app.trainingSetup.btnStartTraining(self)
 					##on_release: root.showNNStats()
+					on_release: root.testingFunction()
 				BoxLayout:
 				BoxLayout:
 				BoxLayout:	

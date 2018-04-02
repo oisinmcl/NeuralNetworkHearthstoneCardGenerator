@@ -36,7 +36,7 @@ ch.setFormatter(formatter)
 logger.addHandler(fh)
 logger.addHandler(ch)
 
-logger.info('Appication started')
+logger.info('*****************Appication started*****************')
 
 #app specific config
 Config.read('config.ini')
@@ -64,7 +64,7 @@ class myApp(App):
 		
 	
 	def build(self):
-		logger.info('*****************Application Building*****************')
+		logger.info('Application Building')
 		return sm
 		
 	def on_stop(self):

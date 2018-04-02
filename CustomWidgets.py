@@ -162,15 +162,12 @@ class HSConfirmPopup(Popup):
 			
 		hsbutton.bind(on_press=mypopup.dismiss)		
 		mypopup.open()
-		
+'''		
 class HSFileChooserPopup(Widget):
-	#foreground_color = ListProperty([0.20,0.18,0.02,0.8])
-	#background_color = ListProperty([ 0.4, 0.37, 0.32, 0.8])
-	#font_name = ObjectProperty('Resources/Fonts/BelweBdBTBold.ttf')
-	#font_size = NumericProperty(18)
-	
 	selectedDir =  os.getcwd()
 	OKselectedDir = ''
+	Counter = 0
+	
 	
 	def __init__(self, **kwargs):
 		print('HSFileChooserPopup created')
@@ -183,11 +180,11 @@ class HSFileChooserPopup(Widget):
 							padding = (10),
 							spacing= 20)
 							
-		filechooser = FileChooserIconView(id= 'dataPicker',
+		self.filechooser = FileChooserIconView(id= 'dataPicker',
 										path = selectedDir,
 										dirselect= True,
 										size = self.size)			
-		content.add_widget(filechooser)
+		content.add_widget(self.filechooser)
 		
 		btncontent = BoxLayout(orientation = 'horizontal', 
 							padding = (10),
@@ -203,27 +200,94 @@ class HSFileChooserPopup(Widget):
 		
 		content.add_widget(btncontent)
 		
-		mypopup = Popup(content = content,              
-							title = _title,
+		self.mypopup = Popup(content = content,              
+							title = _title  + str(self.Counter),
 							title_font = 'Resources/Fonts/Belwe-Medium.ttf',
 							auto_dismiss = False,
 							#size_hint=(.5, .35),
 							separator_color = [247/255,143/255,46/255,1])
 		
-		ok.bind(on_release=mypopup.dismiss)
-		cancel.bind(on_release=mypopup.dismiss)			
-		mypopup.open()
+		ok.bind(on_release=self.mypopup.dismiss)
+		cancel.bind(on_release=self.dismiss_popup)			
+		
+		if self.Counter == 0:
+			self.Counter += 1
+			print('Counter: ' + str(self.Counter))
+			self.mypopup.open()
 
-	'''
+	
 	def OKselectPath(self, instance):
 		print('OK!')
 		print(self.filechooser.path)
 		self.OKselectedDir = self.filechooser.path
-		#self.mypopup.dismiss()
-	
-	def CancelSelectPath(self, instance):
-		print('Cancel!')
+		self.Counter -= 0
 		self.mypopup.dismiss()
-		print('After dismiss')
 
-		'''
+	def dismiss_popup(self, instance):
+		print('Cancel!')
+		self.Counter -= 0
+		self.mypopup.dismiss(instance)
+		print('After dismiss')
+'''
+class HSFileChooserPopup(Popup):
+	selectedDir =  os.getcwd()
+	OKselectedDir = ''
+	Counter = 0
+	
+	
+	def __init__(self, my_widget, **kwargs):
+		super(HSFileChooserPopup,self).__init__(**kwargs)
+		print('HSFileChooserPopup created')
+		
+		self.my_widget = my_widget
+		
+		self.selectedDir =  os.getcwd()
+		self.OKselectedDir = ''
+	
+		self.content = BoxLayout(orientation = 'vertical', 
+							padding = (10),
+							spacing= 20)
+							
+		self.filechooser = FileChooserIconView(id= 'dataPicker',
+										path = self.selectedDir,
+										dirselect= True,
+										size = self.size)			
+		self.content.add_widget(self.filechooser)
+		
+		self.btncontent = BoxLayout(orientation = 'horizontal', 
+							padding = (10),
+							spacing= 20,
+							size_hint=(.5,0.2),
+							pos_hint={'x': 0.25, 'center_y': 0})
+		
+		self.ok = HSButton(text = "OK!", size_hint=(1,1))
+		self.cancel = HSButton(text = "Cancel!", size_hint=(1,1))
+		
+		self.btncontent.add_widget(self.ok)
+		self.btncontent.add_widget(self.cancel)
+		
+		self.content.add_widget(self.btncontent)
+		
+		
+		self.ok.bind(on_release=self.OKselectPath)
+		self.cancel.bind(on_release=self.dismiss_popup)			
+		
+
+	def show(self, _title, _path):
+		self.title = _title
+		title_font = 'Resources/Fonts/Belwe-Medium.ttf'
+		auto_dismiss = False
+		separator_color = [247/255,143/255,46/255,1]
+		self.open()
+	
+	def OKselectPath(self, instance):
+		#print('OK!')
+		print(self.filechooser.path)
+		self.OKselectedDir = self.filechooser.path
+		self.dismiss()
+
+	def dismiss_popup(self, instance):
+		#print('before dismiss')
+		self.dismiss()
+		#print('After dismiss')
+
