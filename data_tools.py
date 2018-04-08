@@ -19,6 +19,10 @@ import sys
 import os
 import math
 
+import logging
+
+# create logger
+module_logger = logging.getLogger('myApp')
 
 
 class Data_Tools:
@@ -76,6 +80,7 @@ class Data_Tools:
 		:param s: a text string
 		:return: encoded list of code points
 		"""
+		module_logger.info('encoding text')
 		return list(map(lambda a: self.encodeChar(ord(a)), s))
 
 
@@ -85,6 +90,7 @@ class Data_Tools:
 		:param avoid_tab_and_lf: if True, tab and line feed characters are replaced by '\'
 		:return:
 		"""
+		module_logger.info('decoding text')
 		return "".join(map(lambda a: chr(self.decodeChar(a, avoid_tab_and_lf)), c))
 
 
@@ -139,6 +145,7 @@ class Data_Tools:
 
 	def print_learning_learned_comparison(self, X, Y, losses, bookranges, batch_loss, batch_accuracy, epoch_size, index, epoch):
 		"""Display utility for printing learning statistics"""
+		module_logger.info('printing learning comparison')
 		print()
 		# epoch_size in number of batches
 		batch_size = X.shape[0]  # batch_size in number of sequences
@@ -190,6 +197,7 @@ class Data_Tools:
 		:return: training data, validation data, list of loaded file names with ranges
 		 If validation is
 		"""
+		module_logger.info('reading data files')
 		codetext = []
 		bookranges = []
 		cardlist = glob.glob(directory, recursive=True)
@@ -256,6 +264,7 @@ class Data_Tools:
 			  + " There will be {} batches per epoch".format(epoch_size))
 
 	def print_validation_header(self,validation_start, bookranges):
+		module_logger.info('printing validation header')
 		bookindex = self.find_book_index(validation_start, bookranges)
 		books = ''
 		for i in range(bookindex, len(bookranges)):

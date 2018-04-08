@@ -198,7 +198,7 @@ class Neural_Network:
 			# loop state around
 			istate = ostate
 			step += self.batchSize * self.seqLength
-		
+		module_logger.info('End of training')
 		
 	def StartGenerating(self):
 		
@@ -239,7 +239,7 @@ class Neural_Network:
 					print("")
 					ncnt = 0
 			file.close
-			module_logger.info('Generating Complete')
+		module_logger.info('Generating Complete')
 			
 	def batch_sequencer(self, raw_data, batch_size, sequence_size, nb_epochs):
 		data = np.array(raw_data)
