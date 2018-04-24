@@ -17,16 +17,32 @@ module_logger = logging.getLogger('myApp')
 class Card_Manager(Screen):
 
 	cardFile = StringProperty()
-	cardCanvas = ObjectProperty()
 	
+	frameSource = StringProperty()
+	raritySource = StringProperty()
+	manaSource = StringProperty()
+	healthSource = StringProperty()
+	attackSource = StringProperty()
+	bannerSource = StringProperty()
+	raceBannerSource = StringProperty()
+	legendaryDragonSource = StringProperty()
 			   
 	def __init__(self, **kwargs): 
 		super(Card_Manager, self).__init__(**kwargs)
 		
 		self.db = Database_Manager()
 		
-		self.frame_minion_neutral = Image(source='Resources\card_assets\frame-minion-neutral.png')
-		self.cardFile = 'none'
+		self.cardFile = 'test'
+		
+		#default values for card assets
+		self.frameSource = 'Resources/card_assets/frame-minion-neutral.png'
+		self.raritySource = 'Resources/card_assets/rarity-minion-legendary.png'
+		self.manaSource = 'Resources/card_assets/cost-mana.png'
+		self.healthSource = 'Resources/card_assets/cost-health.png'
+		self.attackSource = 'Resources/card_assets/attack-minion.png'
+		self.bannerSource = 'Resources/card_assets/name-banner-minion.png'
+		self.raceBannerSource = 'Resources/card_assets/race-banner.png'
+		self.legendaryDragonSource = 'Resources/card_assets/elite-minion.png'
 		
 	def on_enter(self):
 		module_logger.info('Screen changed to :	'+ self.name)
@@ -49,3 +65,4 @@ class Card_Manager(Screen):
 		thread = threading.Thread(target=self.getCardsFromDB, args=())
 		#thread.daemon = True # Daemonize thread
 		thread.start()
+			

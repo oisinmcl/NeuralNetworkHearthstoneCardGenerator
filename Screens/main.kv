@@ -524,10 +524,18 @@
 							pos: self.parent.pos
 							size_hint_x: .5					
 							
-		
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						HSLabel:						
 					
 					HSButton:
 						text: 'Download Cards From Database'
+						size_hint_y: .2
 						on_press: root.btnGetCardsFromDB(self)
 				
 				BoxLayout:
@@ -545,17 +553,66 @@
 							pos: self.pos
 							size: self.size			
 							
-					Image:
+					RelativeLayout:
 						id: 'cardCanvas'
-						source: 'Resources\card_assets\frame-minion-neutral.png'
+						pos: self.pos
+						size: self.size	
 						
-						canvas.before:
-							Color:
-								rgba: 1.0, 1.0, 1.0,1.0  # grey
-							Rectangle:
-								pos: self.pos
-								size: self.size	
-					
+						Image:
+							id: frame
+							source: root.frameSource
+							size_hint: 1, 1
+							keep_ratio: True
+							
+						Image:
+							id: rarity
+							source: root.raritySource
+							size_hint: 0.23, 0.23
+							pos: 147, 115
+							keep_ratio: True
+							
+						Image:
+							id: mana
+							source: root.manaSource
+							size_hint: 0.20, 0.20
+							pos: 38, 333
+							keep_ratio: True	
+
+						Image:
+							id: Racebanner
+							source: root.raceBannerSource
+							size_hint: 0.62, 0.62
+							pos: 78, -105
+							keep_ratio: True								
+							
+						Image:
+							id: health
+							source: root.healthSource
+							size_hint: 0.22, 0.22
+							pos: 275, -12
+							keep_ratio: True
+
+						Image:
+							id: attack
+							source: root.attackSource
+							size_hint: 0.23, 0.23
+							pos: 20, -10
+							keep_ratio: True
+
+						Image:
+							id: banner
+							source: root.bannerSource
+							size_hint: 0.69, 0.69
+							pos: 62, 45
+							keep_ratio: True
+							
+						Image:
+							id: dragon
+							source: root.legendaryDragonSource
+							size_hint: 0.60, 0.60
+							pos: 112, 225
+							keep_ratio: True		
+							
 					BoxLayout:
 						size: self.parent.size  
 						pos: self.parent.pos  
