@@ -153,7 +153,7 @@ class Training_Setup(Screen):
 		except Exception:
 			self.popup.show('Error', 'Error getting lastest cards.')				
 		
-	def getCardsByParam(self, param='Sets', id='Basic'):
+	def getCardsByParam(self, param='sets', id='Basic'):
 		try:
 			status = self.api.getCardsByParam(param, id)
 			self.updateTrainingDataStats()
@@ -164,7 +164,17 @@ class Training_Setup(Screen):
 				self.popup.show('Error', 'There was a HTTP error getting cards')
 			
 		except Exception:
-			self.popup.show('Error', 'Error getting cards by parameter.')				
+			self.popup.show('Error', 'Error getting cards by parameter.')		
+
+	def btnGetLastestCards(self):
+		#event from button, starts new thread for getLastestCards function
+		thread = threading.Thread(target=self.getLastestCards, args=())
+		thread.start()					
+		
+	def btnGetCardsByParam(self, param='sets', id='Basic'):
+		#event from button, starts new thread for getCardsByParam function
+		thread = threading.Thread(target=self.getCardsByParam, args=())
+		thread.start()				
 		
 	def updateTrainingDataStats(self):
 		self.numOfFiles = str(self.txt.countNumberOfFiles(self.dataPath))

@@ -37,7 +37,7 @@
 					pos: self.parent.pos  	
 					orientation: 'vertical'
 					padding: 10
-					spacing: 10
+					spacing: 5
 					
 					HSButton:
 						text: 'Generate'
@@ -50,6 +50,10 @@
 					HSButton:
 						text: 'Card Manager'
 						on_press: root.manager.current = 'Card_Manager'
+						
+					HSButton:
+						text: 'Help'
+						on_press: root.manager.current = 'Help'	
 						
 					BoxLayout:	#formatting only
 				BoxLayout:	#formatting only
@@ -153,14 +157,14 @@
 							font_size: 12
 							size: self.parent.size  
 							pos: self.parent.pos						
-							on_release: root.getLastestCards()
+							on_release: root.btnGetLastestCards()
 							
 						HSButton: 	
 							text: 'Get Cards by Parameter'
 							font_size: 12
 							size: self.parent.size  
 							pos: self.parent.pos
-							on_release: root.getCardsByParam()								
+							on_release: root.btnGetCardsByParam()								
 						
 				BoxLayout:
 					canvas.before:
@@ -350,8 +354,10 @@
 							##size: self.parent.size  
 							pos: self.parent.pos
 
-							
-					
+						BoxLayout:	
+						BoxLayout:
+						BoxLayout:
+						BoxLayout:
 						
 				BoxLayout:
 					canvas.before:
@@ -422,7 +428,8 @@
 							pos: self.parent.pos
 							size_hint_x: .5			
 							
-							
+						BoxLayout:
+						BoxLayout:						
 
 			GridLayout:
 				cols: 3
@@ -470,14 +477,140 @@
 				size: self.parent.size  
 				pos: self.parent.pos  
 				orientation: 'horizontal'
-			
+				padding: 10
+				spacing: 20
+				
+				BoxLayout:
+					##left side box layout
+					size: self.parent.size  
+					pos: self.parent.pos  
+					orientation: 'vertical'
+					padding: 10
+					size_hint_x: .7
+					
+					canvas.before:
+						Color:
+							rgba: 0.4, 0.37, 0.32, 0.8  # grey
+						Rectangle:
+							pos: self.pos
+							size: self.size
+					GridLayout:
+						cols: 2
+						padding: 10 
+						
+						HSLabel:
+							text: 'Card File'
+							size_hint_x: .5	
+							pos: self.parent.pos
+							
+						HSDirInput: 	
+							text:  str(root.cardFile)
+							on_text: root.changeCardFile(self.text)
+							##size: self.parent.size  
+							pos: self.parent.pos
+							on_release: root.showChangeCardChooser()		
+						
+						HSLabel:
+							text: 'Number of Cards: '
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput: 	
+							id: txt_numOfCards
+							text:  'num of cards'
+							hint_text: 'Number of Cards'	
+							input_type: 'number'
+							size: self.parent.size  
+							pos: self.parent.pos
+							size_hint_x: .5					
+							
+		
+					
+					HSButton:
+						text: 'Download Cards From Database'
+						on_press: root.btnGetCardsFromDB(self)
+				
+				BoxLayout:
+					##right side box layout
+					size: self.parent.size  
+					pos: self.parent.pos  
+					orientation: 'horizontal'
+					padding: 10
+					spacing: 10
+					
+					canvas.before:
+						Color:
+							rgba: 0.4, 0.37, 0.32, 0.8  # grey
+						Rectangle:
+							pos: self.pos
+							size: self.size			
+							
+					Image:
+						id: 'cardCanvas'
+						source: 'Resources\card_assets\frame-minion-neutral.png'
+						
+						canvas.before:
+							Color:
+								rgba: 1.0, 1.0, 1.0,1.0  # grey
+							Rectangle:
+								pos: self.pos
+								size: self.size	
+					
+					BoxLayout:
+						size: self.parent.size  
+						pos: self.parent.pos  
+						orientation: 'vertical'
+						padding: 10
+						size_hint_x: .4
+						
+						canvas.before:
+							Color:
+								rgba: 0.4, 0.37, 0.32, 0.8  # grey
+							Rectangle:
+								pos: self.pos
+								size: self.size	
+					
+						
 			HSButton:
 				##pos: self.parent.pos  
 				size_hint_y: .2
-				size_hint_y: .3
+				size_hint_x: .3
+				pos_hint_x: .4
 				text: 'Main Menu'
 				on_press: root.manager.current = 'MainMenu'
 			
 
-
+<Help>:
+	name: 'Help'
+	RelativeLayout:
+		title: 'Training Setup'
+		canvas:
+			Color:
+				rgb: 1, 1, 1
+			Rectangle:
+				source: 'Resources/background.jpg'
+				size: self.size
+		
+		
+		BoxLayout:	
+			size: self.parent.size  
+			pos: self.parent.pos  
+			orientation: 'vertical'
+			padding: 10
+			
+			BoxLayout:	
+				size: self.parent.size  
+				pos: self.parent.pos  
+				orientation: 'horizontal'
+				padding: 10
+					
+						
+			HSButton:
+				##pos: self.parent.pos  
+				size_hint_y: .2
+				size_hint_x: .3
+				pos_hint_x: .4
+				text: 'Main Menu'
+				on_press: root.manager.current = 'MainMenu'
+			
 				

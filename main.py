@@ -13,6 +13,7 @@ from main_menu import Main_Menu
 from training_setup import Training_Setup
 from generate_setup import Generate_Setup
 from card_manager import Card_Manager
+from help import Help
 
 import logging
 import datetime
@@ -55,13 +56,13 @@ class myApp(App):
 	trainingSetup = Training_Setup(nn)
 	generateSetup = Generate_Setup(nn)
 	cardManager = Card_Manager()
-	
+	help = Help()
 	
 	sm.add_widget(mainMenu)
 	sm.add_widget(trainingSetup)
 	sm.add_widget(generateSetup)
 	sm.add_widget(cardManager)
-		
+	sm.add_widget(help)	
 	
 	def build(self):
 		logger.info('Application Building')
