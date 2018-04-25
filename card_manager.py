@@ -19,6 +19,7 @@ module_logger = logging.getLogger('myApp')
 class Card_Manager(Screen):
 
 	cardFile = StringProperty()
+	numOfCards = StringProperty()
 	
 	frameSource = StringProperty()
 	raritySource = StringProperty()
@@ -58,9 +59,9 @@ class Card_Manager(Screen):
 		self.currentArray = json.load(open(self.cardFile))
 		self.currentCardNum = 0
 		self.currentCard = self.currentArray[self.currentCardNum]		
-
+		self.numOfCards = str(len(self.currentArray))
 		
-		self.loadJSON()
+		#self.loadJSON()
 
 		
 		

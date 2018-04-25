@@ -28,6 +28,8 @@ class Training_Setup(Screen):
 	numOfFiles = StringProperty()
 	fileSizes = StringProperty()
 	
+	accuracyTarget = StringProperty()
+	
 			   
 	def __init__(self, _nn, **kwargs): 
 		super(Training_Setup, self).__init__(**kwargs)
@@ -42,7 +44,7 @@ class Training_Setup(Screen):
 		self.epochs = str(self.nn.epochs)
 		self.popup = HSConfirmPopup()
 		self.dataPath = str(self.nn.trainingDataPath)
-	
+		self.accuracyTarget = str(self.nn.accuracyTarget)
 
 		self.dirPicker = HSFileChooserPopup(self)
 		
@@ -108,7 +110,20 @@ class Training_Setup(Screen):
 			except ValueError:
 				self.popup.show('Error', "Invalid data in epochs. Error: "+ str(traceback.format_exc()))
 			except:
-				self.popup.show('Error', "An unexpected error updating epochs value. Error: "+ str(traceback.format_exc()))				
+				self.popup.show('Error', "An unexpected error updating epochs value. Error: "+ str(traceback.format_exc()))		
+
+	def accuracyTargetChange(self, button):
+		#updates accuracyTarget var in nn to text input value
+		if len(button.text) > 0:
+			try: 
+				button.enforce_float(button)
+				if not self.nn.accuracyTarget == int(button.text):
+					self.nn.accuracyTarget = int(button.text)
+					module_logger.info('Accuracy target value changed to: ' + str(self.nn.accuracyTarget))
+			except ValueError:
+				self.popup.show('Error', "Invalid data in accuracy target. Error: "+ str(traceback.format_exc()))
+			except:
+				self.popup.show('Error', "An unexpected error updating accuracy target value. Error: "+ str(traceback.format_exc()))						
 		
 	def dataPathChange(self, widgetText):
 		#updates trainingDataPath var in nn to text input value

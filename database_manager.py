@@ -5,6 +5,7 @@ import traceback
 import math
 import time
 import json
+#import urllib2
 
 module_logger = logging.getLogger('myApp')
 
@@ -24,19 +25,25 @@ class Database_Manager:
 			myJSON = json.dumps(result)
 			timestamp = str(math.trunc(time.time()))
 			with open(self.dataDir + '/FirebaseCards_' + timestamp +self.fileType, mode='a+') as localfile:     
-				localfile.write(myJSON)	 
+				localfile.write(myJSON)	
+		except HTTPError as ex: 
+			print('HTTP Error fetching data from firebase: ' +  e.message)
 		except :
 			print('Error fetching data from firebase: ' + str(traceback.format_exc()))
 		
 	def push(self, data):
 		try:
 			ref = self.firebase.post('/cards',data)
+		except HTTPError as ex: 
+			print('HTTP Error fetching data from firebase: ' +  e.message)			
 		except :
 			print('Error pushing data to firebase: '+ str(traceback.format_exc()))
 	
 	def put(self, id, data):
 		try:
-			self.firebase.put('/cards',id,data)		
+			self.firebase.put('/cards',id,data)	
+		except HTTPError as ex: 
+			print('HTTP Error fetching data from firebase: ' +  e.message)			
 		except :
 			print('Error putting data to firebase: '+ str(traceback.format_exc()))
 
@@ -44,5 +51,7 @@ class Database_Manager:
 	def delete(self, id):
 		try:		
 			self.firebase.delete('/cards', id)
+		except HTTPError as ex: 
+			print('HTTP Error fetching data from firebase: ' +  e.message)			
 		except :
 			print('Error deleting data from firebase: ' + str(traceback.format_exc()))		

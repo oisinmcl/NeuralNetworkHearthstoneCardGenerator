@@ -32,6 +32,7 @@ class Neural_Network:
 		self.trainingDataExt = '/*.txt'
 		self.trainingDataDir = self.trainingDataPath+self.trainingDataExt
 		self.epochs = 10
+		self.accuracyTarget = 0.995
 		
 		self.checkpoint = 'Checkpoints/rnn_train_1521132022-21000000' #4 hours training hearthstone cards
 		self.outputDir = 'Output_data'
@@ -194,6 +195,11 @@ class Neural_Network:
 
 			# display progress bar
 			progress.step(reset=step % _50_BATCHES == 0)
+			
+			#if target accuracy is reached exit loop
+			if (accuracy == self.accuracyTarget):
+				module_logger.info('Target accuracy reached. Stopping training')
+				break
 
 			# loop state around
 			istate = ostate

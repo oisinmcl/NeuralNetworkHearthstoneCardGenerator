@@ -254,6 +254,21 @@
 							size: self.parent.size  
 							pos: self.parent.pos						
 							size_hint_x: .5		
+							
+						HSLabel:
+							text: 'Target Accuracy: '	
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput: 
+							id: txt_epochID
+							text:  str(root.accuracyTarget)
+							hint_text: 'Target Accuracy '
+							on_text: root.accuracyTargetChange(self)
+
+							size: self.parent.size  
+							pos: self.parent.pos						
+							size_hint_x: .5									
 			GridLayout:
 				cols: 3
 				size_hint_y: .3
@@ -519,7 +534,7 @@
 							
 						HSNumericInput: 	
 							id: txt_numOfCards
-							text:  'num of cards'
+							text:  root.numOfCards
 							hint_text: 'Number of Cards'	
 							input_type: 'number'
 							size: self.parent.size  
