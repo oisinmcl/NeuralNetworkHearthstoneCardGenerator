@@ -7,7 +7,7 @@ import json
 
 db =  Database_Manager()
 
-data = json.load(open('Output_data\output_1522685014.txt'))
+data = json.load(open('Output_data\testCard.txt'))
 for cards in data:   
 	db.push(cards)
 

@@ -3,6 +3,8 @@
 #:import HSbutton CustomWidgets.HSButton
 #:import HSLabel CustomWidgets.HSLabel
 #:import HSTextInput CustomWidgets.HSTextInput
+#:import HSCardText CustomWidgets.HSCardText
+#:import HSStatsText CustomWidgets.HSStatsText
 
 <Main_Menu>:
 	name: 'MainMenu'
@@ -611,7 +613,18 @@
 							source: root.legendaryDragonSource
 							size_hint: 0.60, 0.60
 							pos: 112, 225
-							keep_ratio: True		
+							keep_ratio: True
+
+						HSCardText: 
+							text: root.cardTextSource
+							pos: 80, 20
+							size_hint: 0.6, 0.3
+							text_size: self.size
+
+								
+						HSStatsText:
+							text: root.manaValueSource
+							pos: -115, 173
 							
 					BoxLayout:
 						size: self.parent.size  
@@ -626,7 +639,25 @@
 							Rectangle:
 								pos: self.pos
 								size: self.size	
+								
+								
 					
+						HSButton:
+							size: self.parent.size  
+							pos: self.parent.pos  
+							on_press: root.btnDecCardNum(self)
+							text: 'Previous'
+							
+						HSButton:
+							size: self.parent.size  
+							pos: self.parent.pos  
+							on_press: root.btnIncCardNum(self)
+							text: 'Next'
+							
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						HSLabel:
 						
 			HSButton:
 				##pos: self.parent.pos  

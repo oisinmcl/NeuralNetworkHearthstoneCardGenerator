@@ -33,7 +33,7 @@ class Neural_Network:
 		self.trainingDataDir = self.trainingDataPath+self.trainingDataExt
 		self.epochs = 10
 		
-		self.checkpoint = 'Checkpoints/rnn_train_1510277210-21000000' #4 hours training hearthstone cards
+		self.checkpoint = 'Checkpoints/rnn_train_1521132022-21000000' #4 hours training hearthstone cards
 		self.outputDir = 'Output_data'
 		self.outputfile = 'output.txt'
 		

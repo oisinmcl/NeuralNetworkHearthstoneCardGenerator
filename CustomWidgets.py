@@ -10,6 +10,7 @@ from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.widget import Widget
 from kivy.uix.filechooser import FileChooserIconView 
 from kivy.uix.behaviors import ButtonBehavior
+from kivy.core.text import LabelBase 
 
 from kivy.properties import NumericProperty, ObjectProperty, ListProperty, StringProperty
 
@@ -22,6 +23,12 @@ import logging
 
 module_logger = logging.getLogger('myApp')
 
+LabelBase.register(name="Franklin Gothic",  
+                   fn_regular="Resources/Fonts/Franklin Gothic Regular.ttf",
+                   fn_bold="Resources/Fonts/Franklin Gothic Bold.ttf",
+                   fn_italic="Resources/Fonts/Franklin Gothic ITALIC.ttf",
+                   fn_bolditalic="Resources/Fonts/Franklin Gothic Book Italic.ttf")
+
 class HSButton(Button):
 	background_normal = ObjectProperty('Resources/Buttons/SmallButton.png')
 	background_down = 	ObjectProperty('Resources/Buttons/SmallButtonHover.png')
@@ -33,6 +40,21 @@ class HSLabel(Label):
 	color = ListProperty([0.20,0.18,0.02,0.9])
 	font_name = ObjectProperty('Resources/Fonts/BelweBdBTBold.ttf')
 	font_size = NumericProperty(18)
+	
+class HSCardText(Label):
+	color = ListProperty([0.0,0.0,0.0,1.0])
+	font_name = 'Franklin Gothic'
+	font_size = NumericProperty(17)
+	markup = True
+	bold = False
+	halign = 'center'
+	valign = 'middle'	
+
+class HSStatsText(Label):
+	color = ListProperty([1.0,1.0,1.0,1.0])
+	font_name = ObjectProperty('Resources/Fonts/BelweBdBTBold.ttf')
+	font_size = NumericProperty(80)
+	
 '''
 class ToolTip(Label):
 	text=StringProperty("Click to edit") #default toop tip text
