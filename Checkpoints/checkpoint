@@ -1,2 +1,5 @@
-model_checkpoint_path: "rnn_train_1522706571-0"
-all_model_checkpoint_paths: "rnn_train_1522706571-0"
+model_checkpoint_path: "rnn_train_1524754169-9000000"
+all_model_checkpoint_paths: "rnn_train_1524754169-0"
+all_model_checkpoint_paths: "rnn_train_1524754169-3000000"
+all_model_checkpoint_paths: "rnn_train_1524754169-6000000"
+all_model_checkpoint_paths: "rnn_train_1524754169-9000000"

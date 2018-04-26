@@ -33,8 +33,9 @@ class Neural_Network:
 		self.trainingDataDir = self.trainingDataPath+self.trainingDataExt
 		self.epochs = 10
 		self.accuracyTarget = 0.995
+		self.stopTraining = False
 		
-		self.checkpoint = 'Checkpoints/rnn_train_1521132022-21000000' #4 hours training hearthstone cards
+		self.checkpoint = 'Checkpoints/rnn_train_1524754169-9000000' #4 hours training hearthstone cards
 		self.outputDir = 'Output_data'
 		self.outputfile = 'output.txt'
 		
@@ -142,6 +143,7 @@ class Neural_Network:
 		
 		# training loop
 		module_logger.info('Training loop started')
+		self.stopTraining = False
 		for x, y_, epoch in self.batch_sequencer(codetext, self.batchSize, self.seqLength, self.epochs):
 			
 			# train on one minibatch
@@ -200,6 +202,11 @@ class Neural_Network:
 			if (accuracy == self.accuracyTarget):
 				module_logger.info('Target accuracy reached. Stopping training')
 				break
+			
+			#exit loop if self.stopTraining flag is true
+			if (self.stopTraining == True):
+				module_logger.info('Training Cancelled. Stopping training')
+				break
 
 			# loop state around
 			istate = ostate
@@ -212,7 +219,7 @@ class Neural_Network:
 		with tf.Session() as sess:
 			new_saver = tf.train.import_meta_graph(self.checkpoint + '.meta')
 			new_saver.restore(sess, self.checkpoint)
-			x = self.txt.encodeChar(ord("L"))
+			x = self.txt.encodeChar(ord("["))
 			x = np.array([[x]])  # shape [self.batchSize, self.seqLength] with self.batchSize=1 and self.seqLength=1
 			ncnt = 0
 			self.outputfile = self.outputDir+"/output_" +str(math.trunc(time.time()))+".txt"

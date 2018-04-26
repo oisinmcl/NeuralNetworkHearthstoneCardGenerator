@@ -17,9 +17,7 @@
 				source: 'Resources/background.jpg'
 				size: self.size
 
-					
 		BoxLayout:
-
 			orientation: 'vertical'
 			size: self.parent.size
 			pos: self.parent.pos
@@ -42,17 +40,17 @@
 					spacing: 5
 					
 					HSButton:
-						text: 'Generate'
-						on_press: root.manager.current = 'Generate_Setup'
-
+						text: 'Card Manager'
+						on_press: root.manager.current = 'Card_Manager'					
+					
 					HSButton:
 						text: 'Train'
 						on_press: root.manager.current = 'Training_Setup'
 						
 					HSButton:
-						text: 'Card Manager'
-						on_press: root.manager.current = 'Card_Manager'
-						
+						text: 'Generate'
+						on_press: root.manager.current = 'Generate_Setup'
+
 					HSButton:
 						text: 'Help'
 						on_press: root.manager.current = 'Help'	
@@ -111,7 +109,7 @@
 					GridLayout:
 						cols: 2
 						padding: 10 
-						spacing: 20
+						spacing: 30
 						
 						HSLabel:
 							text: 'Data Directory'
@@ -152,9 +150,6 @@
 							hint_text: 'Total Data Size'
 							size: self.parent.size  
 							pos: self.parent.pos						
-					
-						HSLabel:
-						HSLabel:
 						
 						HSButton:
 							text: 'Get Latest Cards'
@@ -288,7 +283,8 @@
 					BoxLayout:
 				HSButton:
 					text: 'Start Training'
-					on_release: app.trainingSetup.btnStartTraining(self)
+					on_press: root.manager.current = 'trainingStats'
+					##on_release: app.trainingSetup.btnStartTraining(self)
 					##on_release: root.showNNStats()
 					##on_release: root.testingFunction()
 				BoxLayout:
@@ -634,14 +630,45 @@
 
 						HSCardText: 
 							text: root.cardTextSource
-							pos: 80, 20
-							size_hint: 0.6, 0.3
+							pos: 90, 30
+							size_hint: 0.55, 0.28
 							text_size: self.size
+							
+							canvas.before:
+								Color:
+									rgba: 0.4, 0.37, 0.32, 0.8  # grey
+								Rectangle:
+									pos: self.pos
+									size: self.size	
 
-								
 						HSStatsText:
 							text: root.manaValueSource
 							pos: -115, 173
+							
+						HSStatsText:
+							text: root.attackValueSource
+							pos: -120, -175
+							font_size: 75	
+						
+						HSStatsText:
+							text: root.healthValueSource
+							pos: 125, -175
+							font_size: 75							
+
+						HSCardText:
+							text: root.nameSource
+							pos: 80, 180
+							size_hint: 0.6, 0.1
+							color: 1.0,1.0,1.0,1.0
+							font_name: 'Resources/Fonts/BelweBdBTBold.ttf'
+							text_size: self.size
+							
+							canvas.before:
+								Color:
+									rgba: 0.4, 0.37, 0.32, 0.8  # grey
+								Rectangle:
+									pos: self.pos
+									size: self.size	
 							
 					BoxLayout:
 						size: self.parent.size  
@@ -658,7 +685,6 @@
 								size: self.size	
 								
 								
-					
 						HSButton:
 							size: self.parent.size  
 							pos: self.parent.pos  
@@ -683,12 +709,45 @@
 				pos_hint_x: .4
 				text: 'Main Menu'
 				on_press: root.manager.current = 'MainMenu'
-			
 
+<Training_Stats>:
+	name: 'trainingStats'
+	RelativeLayout:
+		title: 'Training Setup'
+		canvas:
+			Color:
+				rgb: 1, 1, 1
+			Rectangle:
+				source: 'Resources/background.jpg'
+				size: self.size
+		
+		
+		BoxLayout:	
+			size: self.parent.size  
+			pos: self.parent.pos  
+			padding: 20 
+			spacing: 30
+				
+			ScrollView:
+				id: scrlv	
+				TextInput:
+					size: self.parent.size  
+					pos: self.parent.pos 
+					multiline: True
+					text: '\n a \n a \n a \n a \n a \n a \n a'
+				
+			HSButton:
+				##pos: self.parent.pos  
+				size_hint_y: .2
+				size_hint_x: .3
+				pos_hint_x: .4
+				text: 'Stop Training'
+				on_press: root.btnStopTraining(self)			
+							
 <Help>:
 	name: 'Help'
 	RelativeLayout:
-		title: 'Training Setup'
+		title: 'Help'
 		canvas:
 			Color:
 				rgb: 1, 1, 1

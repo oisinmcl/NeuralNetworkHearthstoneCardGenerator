@@ -117,8 +117,8 @@ class Training_Setup(Screen):
 		if len(button.text) > 0:
 			try: 
 				button.enforce_float(button)
-				if not self.nn.accuracyTarget == int(button.text):
-					self.nn.accuracyTarget = int(button.text)
+				if not self.nn.accuracyTarget == float(button.text):
+					self.nn.accuracyTarget = float(button.text)
 					module_logger.info('Accuracy target value changed to: ' + str(self.nn.accuracyTarget))
 			except ValueError:
 				self.popup.show('Error', "Invalid data in accuracy target. Error: "+ str(traceback.format_exc()))
@@ -168,9 +168,9 @@ class Training_Setup(Screen):
 		except Exception:
 			self.popup.show('Error', 'Error getting lastest cards.')				
 		
-	def getCardsByParam(self, param='sets', id='Basic'):
+	def getCardsByParam(self, param='18336'):
 		try:
-			status = self.api.getCardsByParam(param, id)
+			status = self.api.getCardsByParam(param)
 			self.updateTrainingDataStats()
 			
 			if status == 200:
@@ -186,7 +186,7 @@ class Training_Setup(Screen):
 		thread = threading.Thread(target=self.getLastestCards, args=())
 		thread.start()					
 		
-	def btnGetCardsByParam(self, param='sets', id='Basic'):
+	def btnGetCardsByParam(self, param='18336',):
 		#event from button, starts new thread for getCardsByParam function
 		thread = threading.Thread(target=self.getCardsByParam, args=())
 		thread.start()				

@@ -1,24 +1,10 @@
-Widgets:
-	Numeric input with validation				***Started***
-	Pop up with confirm button and text	 		***Complete
-	label 										***Complete
-	button										***Complete
-	file choose popup
-	
+---todo---
+-generate stats screen
+-training stats screen
+-finish card art generator
 
-Screens:
-	Main Menu 									***Complete
-	Training Set up 							***Started***
-	Training Progress (Could be a custom popup?)  
-	Generate Set up
-	Generate Progress (Could be a custom popup?) 
-	Card Manager
 
-Classes:
-	Database Manager
-	Hearth API
-	Card
-	data tools ***Started***
-	hsNN (Should this be multi process)
-	logger
-	
+---bugs---
+-file chooser for checkpoint file in generate step up no working
+
+

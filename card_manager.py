@@ -21,6 +21,7 @@ class Card_Manager(Screen):
 	cardFile = StringProperty()
 	numOfCards = StringProperty()
 	
+	#imgs for card art
 	frameSource = StringProperty()
 	raritySource = StringProperty()
 	manaSource = StringProperty()
@@ -29,8 +30,14 @@ class Card_Manager(Screen):
 	bannerSource = StringProperty()
 	raceBannerSource = StringProperty()
 	legendaryDragonSource = StringProperty()
+	
+	#card values
 	cardTextSource = StringProperty()
 	manaValueSource = StringProperty()
+	attackValueSource = StringProperty()
+	healthValueSource = StringProperty()
+	nameSource = StringProperty()
+	
 			   
 	def __init__(self, **kwargs): 
 		super(Card_Manager, self).__init__(**kwargs)
@@ -54,8 +61,7 @@ class Card_Manager(Screen):
 		self.cardTextSource = 'Test Text'
 		self.manaValueSource = ''
 		
-
-		self.cardFile = 'Output_data/testCard.txt'
+		self.cardFile = 'Output_data\output_1524780884.txt'
 		self.currentArray = json.load(open(self.cardFile))
 		self.currentCardNum = 0
 		self.currentCard = self.currentArray[self.currentCardNum]		
@@ -99,14 +105,55 @@ class Card_Manager(Screen):
 	def updateCard(self):
 		try:
 			self.currentCard = self.currentArray[self.currentCardNum]
-			self.frameSource = 'Resources/card_assets/frame-'+'minion'+'-'+self.currentCard['cardClass']+'.png'
-			self.raritySource = 'Resources/card_assets/rarity-minion-'+self.currentCard['rarity']+ '.png'
-			self.cardTextSource = self.currentCard['text']
-			self.manaValueSource = str(self.currentCard['cost'])
+			
+			try:
+				self.frameSource = 'Resources/card_assets/frame-'+self.currentCard['type']+'-'+self.currentCard['cardClass']+'.png'
+			except:	
+				self.frameSource = 'Resources/card_assets/frame-minion-neutral.png'
+			
+			try:
+				self.raritySource = 'Resources/card_assets/rarity-minion-'+self.currentCard['rarity']+ '.png'
+			except:
+				self.raritySource =  'Resources/card_assets/rarity-minion-common.png'
+							
+			try:
+				self.nameSource = str(self.currentCard['name'])
+			except:
+				self.nameSource = "no name"
+				
+			try:
+				self.cardTextSource = self.currentCard['text']
+			except:
+				self.cardTextSource = ""
+				
+			try:
+				self.manaValueSource = str(self.currentCard['cost'])
+			except:
+				self.manaValueSource = "0"
+				
+			try:
+				self.attackValueSource = str(self.currentCard['attack'])
+			except:
+				self.attackValueSource = "0"
+							
+			try:
+				self.healthValueSource = str(self.currentCard['health'])
+			except:
+				self.healthValueSource = "0"					
+
 			if(self.currentCard['rarity'].upper() == 'LEGENDARY'):
 				self.legendaryDragonSource = 'Resources/card_assets/elite-minion.png'
 			else:
-				self.legendaryDragonSource = self.transparent
+				self.legendaryDragonSource = self.transparent	
+			
+			if(self.currentCard['type'].upper() != 'MINION'):
+				self.healthSource = self.transparent	
+				self.attackSource = self.transparent
+				self.attackValueSource = ""
+				self.healthValueSource = ""			
+			else:
+				self.healthSource = 'Resources/card_assets/cost-health.png'
+				self.attackSource = 'Resources/card_assets/attack-minion.png'
 		except:
 			self.popup.show('Error', "Error Rendering Current Card")
 			

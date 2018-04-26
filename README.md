@@ -29,23 +29,12 @@ https://kivy.org/docs/installation/installation-windows.html#install-win-dist
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
-
-### Break down into end to end tests
-
-Explain what these tests test and why
+Run units from the test.py file
 
 ```
-Give an example
+python test.py
 ```
 
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 ## Deployment
 
@@ -67,7 +56,7 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Billie Thompson** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Oisin McLaughlin** - *Initial work* - [oisinmcl](https://github.com/oisinmcl)
 
 See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project.
 

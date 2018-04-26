@@ -38,11 +38,16 @@ class Data_Tools:
 	# 91-97 more punctuation
 	# 97-122 lower-case letters
 	# 123-126 more punctuation
+	# <> are now incoded as [] for text mark up in kivy
 	def encodeChar(self, a):
 		"""Encode a character
 		:param a: one character
 		:return: the encoded value
 		"""
+		if a == 60:
+			return 61
+		if a == 62:
+			return 63			
 		if a == 9:
 			return 1
 		if a == 10:
@@ -80,7 +85,7 @@ class Data_Tools:
 		:param s: a text string
 		:return: encoded list of code points
 		"""
-		module_logger.info('encoding text')
+		#module_logger.info('encoding text')
 		return list(map(lambda a: self.encodeChar(ord(a)), s))
 
 
@@ -90,7 +95,7 @@ class Data_Tools:
 		:param avoid_tab_and_lf: if True, tab and line feed characters are replaced by '\'
 		:return:
 		"""
-		module_logger.info('decoding text')
+		#module_logger.info('decoding text')
 		return "".join(map(lambda a: chr(self.decodeChar(a, avoid_tab_and_lf)), c))
 
 
