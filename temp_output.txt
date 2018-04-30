@@ -1,0 +1,5 @@
+Cost: Counter({3: 54, 4: 38, 1: 10, 2: 2})
+attacks: Counter({2: 40, 3: 28, 5: 22})
+healths: Counter({4: 25, 2: 24, 5: 5, 3: 4, 30: 1})
+rarities: Counter({'COMMON': 76, 'RARE': 26, 'LEGENDARY': 3, 'CAMMON': 1})
+cardClasses: Counter({'NEUTRAL': 72, 'WARLOCK': 21, 'WARRIOR': 7, 'PALADIN': 3, 'WARLIOR': 1, 'PRIEST': 1, 'WARLICK': 1})

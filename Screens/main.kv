@@ -136,7 +136,8 @@
 							hint_text: 'Number of training files'	
 							size: self.parent.size  
 							pos: self.parent.pos
-							active: False							
+							active: False
+							readonly: True							
 							
 							
 						HSLabel:
@@ -150,7 +151,8 @@
 							hint_text: 'Total Data Size'
 							size: self.parent.size  
 							pos: self.parent.pos						
-						
+							readonly: True	
+							
 						HSButton:
 							text: 'Get Latest Cards'
 							font_size: 12
@@ -528,7 +530,8 @@
 						HSLabel:
 							text: 'Number of Cards: '
 							size: self.parent.size  
-							pos: self.parent.pos						
+							pos: self.parent.pos
+							readonly: True								
 							
 						HSNumericInput: 	
 							id: txt_numOfCards

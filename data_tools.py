@@ -64,7 +64,7 @@ class Data_Tools:
 	# space = 2
 	# all chars from 32 to 126 = c-30
 	# LF mapped to 127-30
-	def decodeChar(self, c, avoid_tab_and_lf=False):
+	def decodeChar(self, c, avoid_tab_and_lf=True):
 		"""Decode a code point
 		:param c: code point
 		:param avoid_tab_and_lf: if True, tab and line feed characters are replaced by '\'
@@ -77,7 +77,7 @@ class Data_Tools:
 		if 32 <= c + 30 <= 126:
 			return c + 30
 		else:
-			return 0  # unknown
+			return 32  # unknown - changed to space over nul char as causing parse errors
 
 
 	def encode_text(self, s):

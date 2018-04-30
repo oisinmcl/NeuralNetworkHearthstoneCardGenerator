@@ -1,4 +1,5 @@
 from firebase import firebase
+from urllib.error import HTTPError
 
 import logging
 import traceback
@@ -26,6 +27,7 @@ class Database_Manager:
 			timestamp = str(math.trunc(time.time()))
 			with open(self.dataDir + '/FirebaseCards_' + timestamp +self.fileType, mode='a+') as localfile:     
 				localfile.write(myJSON)	
+			return result
 		except HTTPError as ex: 
 			print('HTTP Error fetching data from firebase: ' +  e.message)
 		except :
@@ -34,6 +36,7 @@ class Database_Manager:
 	def push(self, data):
 		try:
 			ref = self.firebase.post('/cards',data)
+			return ref
 		except HTTPError as ex: 
 			print('HTTP Error fetching data from firebase: ' +  e.message)			
 		except :
@@ -41,7 +44,8 @@ class Database_Manager:
 	
 	def put(self, id, data):
 		try:
-			self.firebase.put('/cards',id,data)	
+			ref = self.firebase.put('/cards',id,data)	
+			return ref
 		except HTTPError as ex: 
 			print('HTTP Error fetching data from firebase: ' +  e.message)			
 		except :

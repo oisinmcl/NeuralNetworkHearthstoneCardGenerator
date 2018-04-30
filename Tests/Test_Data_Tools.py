@@ -19,6 +19,8 @@ class Test_Data_Tools(unittest.TestCase):
 		self.assertEqual(self.dataTools.encodeChar(ord('[')), 61)
 		self.assertEqual(self.dataTools.encodeChar(ord(']')), 63)
 		self.assertEqual(self.dataTools.encodeChar(ord(';')), 29)
+		self.assertEqual(self.dataTools.encodeChar(ord('<')), 61)
+		self.assertEqual(self.dataTools.encodeChar(ord('>')), 63)
 		
 	def test_decodeChar(self):
 		self.assertEqual(chr(self.dataTools.decodeChar(35)), 'A')

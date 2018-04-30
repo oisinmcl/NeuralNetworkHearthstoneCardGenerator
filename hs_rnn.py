@@ -32,10 +32,10 @@ class Neural_Network:
 		self.trainingDataExt = '/*.txt'
 		self.trainingDataDir = self.trainingDataPath+self.trainingDataExt
 		self.epochs = 10
-		self.accuracyTarget = 0.995
+		self.accuracyTarget = 0.90
 		self.stopTraining = False
 		
-		self.checkpoint = 'Checkpoints/rnn_train_1524754169-9000000' #4 hours training hearthstone cards
+		self.checkpoint = 'Checkpoints/rnn_train_1524783758-27000000' #4 hours training hearthstone cards
 		self.outputDir = 'Output_data'
 		self.outputfile = 'output.txt'
 		

@@ -1,14 +1,36 @@
-from hs_rnn import Neural_Network 
-from hearthstoneAPI import HearthstoneAPI
-from database_manager import Database_Manager
+#from hs_rnn import Neural_Network 
+#from hearthstoneAPI import HearthstoneAPI
+#from database_manager import Database_Manager
+from collections import Counter
 
 import json
 import re
 
-db =  Database_Manager()
-#data = json.load(open('Output_data\output_1524659790.txt'))
+#db =  Database_Manager()
 
 
+data = json.load(open('Output_data\output_1525082192.txt'))
+costs = Counter(k['cost'] for k in data if k.get('cost'))
+attacks = Counter(k['attack'] for k in data if k.get('attack'))
+healths = Counter(k['health'] for k in data if k.get('health'))
+rarities = Counter(k['rarity'] for k in data if k.get('rarity'))
+cardClasses = Counter(k['cardClass'] for k in data if k.get('cardClass'))
+
+with open("temp_output.txt", mode='a') as localfile:     
+	localfile.write('Cost: ' + str(costs) + "\n")
+	localfile.write('attacks: ' + str(attacks) + "\n")
+	localfile.write('healths: '+str(healths) + "\n")
+	localfile.write('rarities: '+str(rarities) + "\n")
+	localfile.write('cardClasses: '+str(cardClasses) + "\n")
+
+
+
+
+
+# testCardData = '{"artist": "test artist","cardClass": "NEUTRAL","collectible": true,"cost": 3,"dbfId": 2523,"flavor": "Test Flavor","id": "EX1_322","name": "test card","playerClass": "PRIEST","rarity": "COMMON","set": "GVG","text": "test text", "type": "MINION"}'
+# testCardJson = json.loads(testCardData)
+# print(testCardJson)
+# print(db.push(testCardJson))
 
 # file = open('Output_data\output_1524659790.txt', 'r')
 # s = file.read()
@@ -47,9 +69,9 @@ db =  Database_Manager()
 
 #db.put('-LAYPe_GTk5zVX4lDvF_', data[0])
 
-api = HearthstoneAPI()
-api.getLastestSet()
-api.getCardsByParam('20022')
+# api = HearthstoneAPI()
+# api.getLastestSet()
+# api.getCardsByParam('20022')
 
 #nn = Neural_Network()
 #nn.startTraining()

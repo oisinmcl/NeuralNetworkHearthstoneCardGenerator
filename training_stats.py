@@ -36,8 +36,9 @@ class Training_Stats(Screen):
 	def StartTraining(self):
 		module_logger.info('Training Thread Started')
 		self.nn.startTraining()
+		self.popup.show('Success', 'Training Complete')
 		
-	def btnStopTraining(self):
+	def btnStopTraining(self, button):
 		module_logger.info('Training Cancelled')
 		self.nn.stopTraining = True
-		
+		self.manager.current = 'MainMenu'

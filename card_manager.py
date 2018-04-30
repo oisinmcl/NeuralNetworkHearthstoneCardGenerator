@@ -60,8 +60,8 @@ class Card_Manager(Screen):
 		self.legendaryDragonSource = 'Resources/card_assets/elite-minion.png'
 		self.cardTextSource = 'Test Text'
 		self.manaValueSource = ''
-		
-		self.cardFile = 'Output_data\output_1524780884.txt'
+
+		self.cardFile = 'Output_data\output_1525082192.txt'
 		self.currentArray = json.load(open(self.cardFile))
 		self.currentCardNum = 0
 		self.currentCard = self.currentArray[self.currentCardNum]		
@@ -98,7 +98,8 @@ class Card_Manager(Screen):
 			self.cardFile = 'Output_data/testCard.txt'
 			self.currentArray = json.load(open(self.cardFile))
 			self.currentCardNum = 0
-			self.currentCard = self.currentArray[self.currentCardNum]		
+			self.currentCard = self.currentArray[self.currentCardNum]
+			self.updateCard()   
 		except:
 			self.popup.show('Error', "Error loading JSON")
 		

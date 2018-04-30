@@ -125,6 +125,7 @@ class Generate_Setup(Screen):
 	def StartGenerating(self):
 		module_logger.info('Training Thread Started')
 		self.nn.StartGenerating()
+		self.popup.show('Success', 'Generating Card Text Complete')
 		
 	def btnStartGenerating(self, button):
 		module_logger.info('Creating new thread for training')
