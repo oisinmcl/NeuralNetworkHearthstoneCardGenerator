@@ -540,7 +540,8 @@
 							input_type: 'number'
 							size: self.parent.size  
 							pos: self.parent.pos
-							size_hint_x: .5					
+							size_hint_x: .5	
+							readonly: True
 							
 						HSLabel:
 						HSLabel:
@@ -575,6 +576,27 @@
 						id: 'cardCanvas'
 						pos: self.pos
 						size: self.size	
+						
+						ScatterLayout:
+							auto_bring_to_front: False
+							pos: self.pos
+							size: art.size
+							
+							## canvas.before:
+								## Color:
+									## rgba: 0.99, 0.99, 0.99, 0.8  # grey
+								## Rectangle:
+									## pos: self.pos
+									## size: self.size			
+							
+							
+							Image:
+								id: art
+								source: root.silenceSource
+								size_hint: 1, 1
+								pos: 0, 0
+								keep_ratio: True	
+					
 						
 						Image:
 							id: frame
@@ -630,48 +652,55 @@
 							size_hint: 0.60, 0.60
 							pos: 112, 225
 							keep_ratio: True
-
+							
+						##card text value
 						HSCardText: 
 							text: root.cardTextSource
 							pos: 90, 30
 							size_hint: 0.55, 0.28
 							text_size: self.size
 							
-							canvas.before:
-								Color:
-									rgba: 0.4, 0.37, 0.32, 0.8  # grey
-								Rectangle:
-									pos: self.pos
-									size: self.size	
-
+						##race value
+						HSStatsText: 
+							text: root.raceValueSource
+							pos: 142, 15
+							size_hint: 0.3, 0.05
+							color: 1.0,1.0,1.0,1.0
+							text_size: self.size
+							font_size: 16
+									
+						##mana value
 						HSStatsText:
 							text: root.manaValueSource
 							pos: -115, 173
 							
+						##attack value	
 						HSStatsText:
 							text: root.attackValueSource
 							pos: -120, -175
-							font_size: 75	
-						
+							font_size: 75
+							
+						##health value
 						HSStatsText:
 							text: root.healthValueSource
-							pos: 125, -175
-							font_size: 75							
-
-						HSCardText:
-							text: root.nameSource
-							pos: 80, 180
-							size_hint: 0.6, 0.1
-							color: 1.0,1.0,1.0,1.0
-							font_name: 'Resources/Fonts/BelweBdBTBold.ttf'
-							text_size: self.size
+							pos: 126, -175
+							font_size: 75	
 							
-							canvas.before:
-								Color:
-									rgba: 0.4, 0.37, 0.32, 0.8  # grey
-								Rectangle:
-									pos: self.pos
-									size: self.size	
+						##name value
+						HSStatsText:
+							text: root.nameSource
+							pos: 67, 173
+							size_hint: 0.65, 0.1
+							color: 1.0,1.0,1.0,1.0
+							text_size: self.size
+							font_size: 20
+							
+							## canvas.before:
+								## Color:
+									## rgba: 0.4, 0.37, 0.32, 0.8  # grey
+								## Rectangle:
+									## pos: self.pos
+									## size: self.size	
 							
 					BoxLayout:
 						size: self.parent.size  

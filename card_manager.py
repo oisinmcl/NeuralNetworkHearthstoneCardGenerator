@@ -11,6 +11,8 @@ from CustomWidgets import HSConfirmPopup, HSFileChooserPopup
 import logging
 import threading
 import json
+import os
+import traceback
 
 # create logger
 module_logger = logging.getLogger('myApp')
@@ -22,6 +24,9 @@ class Card_Manager(Screen):
 	numOfCards = StringProperty()
 	
 	#imgs for card art
+	silenceSource = StringProperty()
+	preloadMinionSource = StringProperty()
+	preloadSpellSource = StringProperty()
 	frameSource = StringProperty()
 	raritySource = StringProperty()
 	manaSource = StringProperty()
@@ -37,6 +42,7 @@ class Card_Manager(Screen):
 	attackValueSource = StringProperty()
 	healthValueSource = StringProperty()
 	nameSource = StringProperty()
+	raceValueSource = StringProperty()
 	
 			   
 	def __init__(self, **kwargs): 
@@ -44,10 +50,12 @@ class Card_Manager(Screen):
 		
 		self.db = Database_Manager()
 		self.popup = HSConfirmPopup()
-		
-		
+		self.dirPicker = HSFileChooserPopup(self)
 		
 		#default values for card assets
+		self.silenceSource = 'Resources/card_assets/silence-x.png'
+		preloadMinionSource = 'Resources/card_assets/mPreload.jpg'
+		preloadSpellSource = 'Resources/card_assets/sPreload.jpg'
 		self.transparent = 'Resources/card_assets/transparent.png'
 		self.frameSource = 'Resources/card_assets/frame-minion-neutral.png'
 		self.raritySource = 'Resources/card_assets/rarity-minion-legendary.png'
@@ -60,6 +68,7 @@ class Card_Manager(Screen):
 		self.legendaryDragonSource = 'Resources/card_assets/elite-minion.png'
 		self.cardTextSource = 'Test Text'
 		self.manaValueSource = ''
+		self.raceValueSource = ''
 
 		self.cardFile = 'Output_data\output_1525082192.txt'
 		self.currentArray = json.load(open(self.cardFile))
@@ -77,11 +86,32 @@ class Card_Manager(Screen):
 		#self.cardCanvas.add_widget(self.frame_minion_neutral)
 
 
-	def changeCardFile(self, text):
-		print('change card file')
+	def changeCardFile(self, widgetText):
+		print('changeCardFile')
+		print ('widgetText: '+widgetText)
+		#updates trainingDataPath var in nn to text input value
+		if len(widgetText) > 0:
+			try: 
+				#if not self.cardFile == widgetText:
+				self.cardFile = widgetText
+				print ('Card File: ' + self.cardFile)
+				self.loadJSON()
+				module_logger.info('New Card File Selected: ' + str(self.cardFile))
+				module_logger.info('New Card File Selected: ' + str(self.cardFile))
+			except ValueError:
+				self.popup.show('Error', 'Card File Selected: '+ str(traceback.format_exc()))
+			except:
+				self.popup.show('Error', "An unexpected error updating Card File. Error: "+ str(traceback.format_exc()))		
+	
 		
 	def showChangeCardChooser(self):
-		print('showChangeCardChooser')
+		#dirPicker = HSFileChooserPopup()
+		print ('showChangeCardChooser')
+		self.dirselect= False
+		self.dirPicker.show('Choose a Card File', os.getcwd()+"Output_data")
+		if len(self.dirPicker.OKselectedDir) > 0:
+			self.cardFile = self.dirPicker.OKselectedDir 
+			print ('Path: '+self.dirPicker.OKselectedDir )
 		
 	def getCardsFromDB(self):
 		self.db.get()
@@ -94,14 +124,17 @@ class Card_Manager(Screen):
 		thread.start()
 		
 	def loadJSON(self):
+		print('loading JSON')
 		try:
-			self.cardFile = 'Output_data/testCard.txt'
+			module_logger.info('Loading Card JSON file')
+			#self.cardFile = 'Output_data/testCard.txt'
 			self.currentArray = json.load(open(self.cardFile))
 			self.currentCardNum = 0
 			self.currentCard = self.currentArray[self.currentCardNum]
+			self.numOfCards = str(len(self.currentArray))
 			self.updateCard()   
 		except:
-			self.popup.show('Error', "Error loading JSON")
+			self.popup.show('Error', "Error loading JSON" + str(traceback.format_exc()))
 		
 	def updateCard(self):
 		try:
@@ -140,7 +173,12 @@ class Card_Manager(Screen):
 			try:
 				self.healthValueSource = str(self.currentCard['health'])
 			except:
-				self.healthValueSource = "0"					
+				self.healthValueSource = "1"		
+
+			try:
+				self.raceValueSource = str(self.currentCard['race'])
+			except:
+				self.raceValueSource = ""					
 
 			if(self.currentCard['rarity'].upper() == 'LEGENDARY'):
 				self.legendaryDragonSource = 'Resources/card_assets/elite-minion.png'

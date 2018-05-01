@@ -37,7 +37,7 @@ class Generate_Setup(Screen):
 		self.outputDir = str(self.nn.outputDir)
 		self.numOfChars = str(self.nn.numOfChars)
 
-		self.dirPicker = HSFileChooserPopup(self)
+		self.dirPicker = HSFileChooserPopup(self, True)
 		self.popup = HSConfirmPopup()
 		
 	def on_enter(self):

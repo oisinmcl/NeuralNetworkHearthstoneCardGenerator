@@ -46,7 +46,7 @@ class Training_Setup(Screen):
 		self.dataPath = str(self.nn.trainingDataPath)
 		self.accuracyTarget = str(self.nn.accuracyTarget)
 
-		self.dirPicker = HSFileChooserPopup(self)
+		self.dirPicker = HSFileChooserPopup(self, True)
 		
 		self.numOfFiles = str(0)
 		self.fileSizes = str(0)
@@ -144,6 +144,7 @@ class Training_Setup(Screen):
 			self.dataPath = self.dirPicker.OKselectedDir 
 	
 	def showNNStats(self):
+		#test function only
 		self.popup.show('Test Title', 'Network nLayers: ' + str(self.nn.nLayers) + "\n" + 
 									'Network internalSize: ' + str(self.nn.internalSize) + "\n" +
 									'Network learningRate: ' + str(self.nn.learningRate) + "\n" +

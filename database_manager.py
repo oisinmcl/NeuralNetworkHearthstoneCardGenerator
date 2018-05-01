@@ -29,33 +29,33 @@ class Database_Manager:
 				localfile.write(myJSON)	
 			return result
 		except HTTPError as ex: 
-			print('HTTP Error fetching data from firebase: ' +  e.message)
+			module_logger.error('HTTP Error fetching data from firebase: ' +  e.message)
 		except :
-			print('Error fetching data from firebase: ' + str(traceback.format_exc()))
+			module_logger.error('Error fetching data from firebase: ' + str(traceback.format_exc()))
 		
 	def push(self, data):
 		try:
 			ref = self.firebase.post('/cards',data)
 			return ref
 		except HTTPError as ex: 
-			print('HTTP Error fetching data from firebase: ' +  e.message)			
+			module_logger.error('HTTP Error pushing data to  firebase: ' +  e.message)			
 		except :
-			print('Error pushing data to firebase: '+ str(traceback.format_exc()))
+			module_logger.error('Error pushing data to firebase: '+ str(traceback.format_exc()))
 	
 	def put(self, id, data):
 		try:
 			ref = self.firebase.put('/cards',id,data)	
 			return ref
 		except HTTPError as ex: 
-			print('HTTP Error fetching data from firebase: ' +  e.message)			
+			module_logger.error('HTTP Error putting data to firebase: ' +  e.message)			
 		except :
-			print('Error putting data to firebase: '+ str(traceback.format_exc()))
+			module_logger.error('Error putting data to firebase: '+ str(traceback.format_exc()))
 
 			
 	def delete(self, id):
 		try:		
 			self.firebase.delete('/cards', id)
 		except HTTPError as ex: 
-			print('HTTP Error fetching data from firebase: ' +  e.message)			
+			module_logger.error('HTTP Error deleting data from firebase: ' +  e.message)			
 		except :
-			print('Error deleting data from firebase: ' + str(traceback.format_exc()))		
+			module_logger.error('Error deleting data from firebase: ' + str(traceback.format_exc()))		

@@ -52,9 +52,12 @@ class HSCardText(Label):
 
 class HSStatsText(Label):
 	color = ListProperty([1.0,1.0,1.0,1.0])
+	outline_color = ListProperty([0,0,0,1.0])
+	outline_width = NumericProperty(2)
 	font_name = ObjectProperty('Resources/Fonts/BelweBdBTBold.ttf')
 	font_size = NumericProperty(80)
-	
+	halign = 'center'
+	valign = 'middle'
 '''
 class ToolTip(Label):
 	text=StringProperty("Click to edit") #default toop tip text
@@ -258,12 +261,12 @@ class HSFileChooserPopup(Popup):
 	Counter = 0
 	
 	
-	def __init__(self, my_widget, **kwargs):
+	def __init__(self, my_widget, CanPickdir = False, **kwargs):
 		super(HSFileChooserPopup,self).__init__(**kwargs)
 		#print('HSFileChooserPopup created')
 		
 		self.my_widget = my_widget
-		
+		self.canPickdir = CanPickdir
 		self.selectedDir =  os.getcwd()
 		self.OKselectedDir = ''
 	
@@ -273,7 +276,7 @@ class HSFileChooserPopup(Popup):
 							
 		self.filechooser = FileChooserIconView(id= 'dataPicker',
 										path = self.selectedDir,
-										dirselect= True,
+										dirselect= self.canPickdir,
 										size = self.size)			
 		self.content.add_widget(self.filechooser)
 		
@@ -305,8 +308,11 @@ class HSFileChooserPopup(Popup):
 	
 	def OKselectPath(self, instance):
 		#print('OK!')
-		print(self.filechooser.path)
-		self.OKselectedDir = self.filechooser.path
+		#print(self.filechooser.path)
+		if (self.canPickdir):
+			self.OKselectedDir = self.filechooser.path
+		else:
+			self.OKselectedDir = self.filechooser.selection[0]
 		self.dismiss()
 
 	def dismiss_popup(self, instance):
