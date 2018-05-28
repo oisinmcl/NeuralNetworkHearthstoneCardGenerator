@@ -24,6 +24,8 @@ class Card_Manager(Screen):
 	numOfCards = StringProperty()
 	
 	#imgs for card art
+	transparent = StringProperty()
+	cardArtSource = StringProperty()
 	silenceSource = StringProperty()
 	preloadMinionSource = StringProperty()
 	preloadSpellSource = StringProperty()
@@ -50,9 +52,12 @@ class Card_Manager(Screen):
 		
 		self.db = Database_Manager()
 		self.popup = HSConfirmPopup()
-		self.dirPicker = HSFileChooserPopup(self)
+		
+		self.cardFilePicker = HSFileChooserPopup(self)
+		self.cardArtPicker = HSFileChooserPopup(self)
 		
 		#default values for card assets
+		self.cardArtSource = 'Resources/card_art_samples/maxresdefault.jpg'
 		self.silenceSource = 'Resources/card_assets/silence-x.png'
 		preloadMinionSource = 'Resources/card_assets/mPreload.jpg'
 		preloadSpellSource = 'Resources/card_assets/sPreload.jpg'
@@ -87,31 +92,62 @@ class Card_Manager(Screen):
 
 
 	def changeCardFile(self, widgetText):
-		print('changeCardFile')
-		print ('widgetText: '+widgetText)
 		#updates trainingDataPath var in nn to text input value
 		if len(widgetText) > 0:
 			try: 
-				#if not self.cardFile == widgetText:
-				self.cardFile = widgetText
-				print ('Card File: ' + self.cardFile)
-				self.loadJSON()
-				module_logger.info('New Card File Selected: ' + str(self.cardFile))
-				module_logger.info('New Card File Selected: ' + str(self.cardFile))
+				if not self.cardFile == widgetText:
+					self.cardFile = widgetText
+					self.loadJSON()
+					module_logger.info('New Card File Selected: ' + str(self.cardFile))
 			except ValueError:
 				self.popup.show('Error', 'Card File Selected: '+ str(traceback.format_exc()))
 			except:
 				self.popup.show('Error', "An unexpected error updating Card File. Error: "+ str(traceback.format_exc()))		
 	
-		
 	def showChangeCardChooser(self):
-		#dirPicker = HSFileChooserPopup()
-		print ('showChangeCardChooser')
-		self.dirselect= False
-		self.dirPicker.show('Choose a Card File', os.getcwd()+"Output_data")
-		if len(self.dirPicker.OKselectedDir) > 0:
-			self.cardFile = self.dirPicker.OKselectedDir 
-			print ('Path: '+self.dirPicker.OKselectedDir )
+		try:
+			self.cardFilePicker.show('Choose a Card File', str(os.getcwd())+"Output_data")
+			if len(self.cardFilePicker.OKselectedDir) > 0:
+				try: 
+					if not self.cardFile == self.cardFilePicker.OKselectedDir:
+						self.cardFile = self.cardFilePicker.OKselectedDir
+						self.loadJSON()
+						module_logger.info('New Card File Selected: ' + str(self.cardFile))
+				except ValueError:
+					self.popup.show('Error', 'Card File Selected: '+ str(traceback.format_exc()))
+				except:
+					self.popup.show('Error', "An unexpected error updating Card File. Error: "+ str(traceback.format_exc()))		
+		except:
+				self.popup.show('Error', "Error in card file path")	
+
+		
+	def changeCardArt(self, widgetText):
+		if len(widgetText) > 0:
+			try: 
+				if not self.cardArtSource == widgetText:
+					self.cardArtSource = widgetText
+					module_logger.info('New Card Art Selected: ' + str(self.cardArtSource))
+			except ValueError:
+				self.popup.show('Error', 'Card Art File Selected: '+ str(traceback.format_exc()))
+			except:
+				self.popup.show('Error', "An unexpected error updating Card  Art File. Error: ")		
+	
+	def showChangeCardArtChooser(self):
+		try:
+			self.cardArtPicker.show('Choose a Card Art File', str(os.getcwd())+"/Resources/card_art_samples")
+			if len(self.cardArtPicker.OKselectedDir) > 0:
+				try: 
+					if not self.cardArtSource == self.cardArtPicker.OKselectedDir:
+						self.cardArtSource = self.cardArtPicker.OKselectedDir
+						module_logger.info('New Card Art Selected: ' + str(self.cardArtSource))
+				except ValueError:
+					self.popup.show('Error', 'Card Art File Selected: '+ str(traceback.format_exc()))
+				except:
+					self.popup.show('Error', "An unexpected error updating Card  Art File. Error: ")		
+		except:
+				self.popup.show('Error', "Error in card art path")	
+
+	
 		
 	def getCardsFromDB(self):
 		self.db.get()
@@ -189,10 +225,12 @@ class Card_Manager(Screen):
 				self.healthSource = self.transparent	
 				self.attackSource = self.transparent
 				self.attackValueSource = ""
-				self.healthValueSource = ""			
+				self.healthValueSource = ""	
+				self.raceBannerSource = self.transparent
 			else:
 				self.healthSource = 'Resources/card_assets/cost-health.png'
 				self.attackSource = 'Resources/card_assets/attack-minion.png'
+				self.raceBannerSource = 'Resources/card_assets/race-banner.png'
 		except:
 			self.popup.show('Error', "Error Rendering Current Card")
 			
@@ -204,4 +242,8 @@ class Card_Manager(Screen):
 	def btnDecCardNum(self, button):
 		if (self.currentCardNum > 0): 
 			self.currentCardNum-=1
-			self.updateCard()	
+			self.updateCard()
+
+	def btnRefresh(self, button):
+		self.cardArtSource = self.transparent
+		self.updateCard()

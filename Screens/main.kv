@@ -516,7 +516,7 @@
 						padding: 10 
 						
 						HSLabel:
-							text: 'Card File'
+							text: 'Card File:'
 							size_hint_x: .5	
 							pos: self.parent.pos
 							
@@ -542,6 +542,18 @@
 							pos: self.parent.pos
 							size_hint_x: .5	
 							readonly: True
+							
+						HSLabel:
+							text: 'Card Art File: '
+							size_hint_x: .5	
+							pos: self.parent.pos
+							
+						HSDirInput: 	
+							text:  str(root.cardArtSource)
+							##on_text: root.changeCardArt(self.text)
+							##size: self.parent.size  
+							pos: self.parent.pos
+							on_release: root.showChangeCardArtChooser()		
 							
 						HSLabel:
 						HSLabel:
@@ -577,26 +589,27 @@
 						pos: self.pos
 						size: self.size	
 						
-						ScatterLayout:
-							auto_bring_to_front: False
+
+							
+						StencilView:
+							id: StencilView
 							pos: self.pos
-							size: art.size
-							
-							## canvas.before:
-								## Color:
-									## rgba: 0.99, 0.99, 0.99, 0.8  # grey
-								## Rectangle:
-									## pos: self.pos
-									## size: self.size			
-							
-							
-							Image:
-								id: art
-								source: root.silenceSource
-								size_hint: 1, 1
-								pos: 0, 0
-								keep_ratio: True	
-					
+							size: self.size
+							size_hint: 0.7, 0.6
+							pos: 53, 140							
+
+							ScatterLayout:
+								auto_bring_to_front: False
+								pos: art.pos
+								size: art.size	
+								
+								Image:
+									id: art
+									source: root.cardArtSource
+									pos: StencilView.pos
+									size: StencilView.size
+									keep_ratio: True	
+
 						
 						Image:
 							id: frame
@@ -694,14 +707,7 @@
 							color: 1.0,1.0,1.0,1.0
 							text_size: self.size
 							font_size: 20
-							
-							## canvas.before:
-								## Color:
-									## rgba: 0.4, 0.37, 0.32, 0.8  # grey
-								## Rectangle:
-									## pos: self.pos
-									## size: self.size	
-							
+
 					BoxLayout:
 						size: self.parent.size  
 						pos: self.parent.pos  
@@ -728,6 +734,12 @@
 							pos: self.parent.pos  
 							on_press: root.btnIncCardNum(self)
 							text: 'Next'
+							
+						HSButton:
+							size: self.parent.size  
+							pos: self.parent.pos  
+							on_press: root.btnRefresh(self)
+							text: 'Refresh'	
 							
 						HSLabel:
 						HSLabel:

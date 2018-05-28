@@ -134,7 +134,7 @@
 {
 "artist": "James Ryman",
 "attack": 3,
-"cardClass": "NEUTRAL",
+"cardClass": "PRIEST",
 "collectible": true,
 "cost": 30,
 "dbfId": 2032,

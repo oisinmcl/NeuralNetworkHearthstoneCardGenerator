@@ -8,7 +8,7 @@ from kivy.uix.textinput import TextInput
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.widget import Widget
-from kivy.uix.filechooser import FileChooserIconView 
+from kivy.uix.filechooser import FileChooserIconView, FileChooserListView
 from kivy.uix.behaviors import ButtonBehavior
 from kivy.core.text import LabelBase 
 
@@ -274,7 +274,7 @@ class HSFileChooserPopup(Popup):
 							padding = (10),
 							spacing= 20)
 							
-		self.filechooser = FileChooserIconView(id= 'dataPicker',
+		self.filechooser = FileChooserListView(id= 'dataPicker',
 										path = self.selectedDir,
 										dirselect= self.canPickdir,
 										size = self.size)			

@@ -199,7 +199,7 @@ class Neural_Network:
 			progress.step(reset=step % _50_BATCHES == 0)
 			
 			#if target accuracy is reached exit loop
-			if (accuracy == self.accuracyTarget):
+			if (accuracy >= self.accuracyTarget):
 				module_logger.info('Target accuracy reached. Stopping training')
 				break
 			

@@ -73,7 +73,7 @@ class Data_Tools:
 		if c == 1:
 			return 32 if avoid_tab_and_lf else 9  # space instead of TAB
 		if c == 127 - 30:
-			return 92 if avoid_tab_and_lf else 10  # \ instead of LF
+			return 92 if avoid_tab_and_lf else 9  # space instead of LF
 		if 32 <= c + 30 <= 126:
 			return c + 30
 		else:
@@ -132,7 +132,7 @@ class Data_Tools:
 			if entry.is_file():
 				total += entry.stat().st_size
 			elif entry.is_dir():
-				total += folder_size(entry.path)
+				total += calcFileSizes(entry.path)
 		return total
 		
 		
