@@ -140,6 +140,7 @@ class Neural_Network:
 		sess = tf.Session()
 		sess.run(init)
 		step = 0
+		acc = 0
 		
 		# training loop
 		module_logger.info('Training loop started')
@@ -199,7 +200,7 @@ class Neural_Network:
 			progress.step(reset=step % _50_BATCHES == 0)
 			
 			#if target accuracy is reached exit loop
-			if (accuracy >= self.accuracyTarget):
+			if (acc >= self.accuracyTarget):
 				module_logger.info('Target accuracy reached. Stopping training')
 				break
 			
@@ -212,6 +213,9 @@ class Neural_Network:
 			istate = ostate
 			step += self.batchSize * self.seqLength
 		module_logger.info('End of training')
+		
+	def setStopTrainingFlag(self):
+		self.stopTraining = True
 		
 	def StartGenerating(self):
 		

@@ -5,6 +5,8 @@ from kivy.uix.screenmanager import Screen
 from kivy.uix.image import Image
 from kivy.properties import StringProperty,ObjectProperty
 
+from CustomWidgets import HSConfirmPopup
+
 
 import logging
 import threading
@@ -20,8 +22,8 @@ class Training_Stats(Screen):
 		super(Training_Stats, self).__init__(**kwargs)
 		
 		self.nn = _nn
-		
 		self.statusString = ""
+		self.popup = HSConfirmPopup()
 		
 	def on_enter(self):
 		module_logger.info('Screen changed to :	'+ self.name)
@@ -40,5 +42,5 @@ class Training_Stats(Screen):
 		
 	def btnStopTraining(self, button):
 		module_logger.info('Training Cancelled')
-		self.nn.stopTraining = True
+		self.nn.setStopTrainingFlag()
 		self.manager.current = 'MainMenu'

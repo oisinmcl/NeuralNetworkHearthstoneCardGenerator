@@ -135,9 +135,6 @@ class Data_Tools:
 				total += calcFileSizes(entry.path)
 		return total
 		
-		
-		
-
 	def find_book(self, index, bookranges):
 		return next(
 			book["name"] for book in bookranges if (book["start"] <= index < book["end"]))
@@ -146,7 +143,6 @@ class Data_Tools:
 	def find_book_index(self, index, bookranges):
 		return next(
 			i for i, book in enumerate(bookranges) if (book["start"] <= index < book["end"]))
-
 
 	def print_learning_learned_comparison(self, X, Y, losses, bookranges, batch_loss, batch_accuracy, epoch_size, index, epoch):
 		"""Display utility for printing learning statistics"""
