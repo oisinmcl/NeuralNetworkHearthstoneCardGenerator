@@ -781,13 +781,13 @@
 					## pos: self.parent.pos 
 					## multiline: True
 					## text: '\n a \n a \n a \n a \n a \n a \n a'
-			canvas.before:
-				Color:
-					rgba: 0.4, 0.37, 0.32, 0.8  # blue
-				Rectangle:
-					pos: self.pos
-					size: self.size		
-			
+				canvas.before:
+					Color:
+						rgba: 0.4, 0.37, 0.32, 0.8  # blue
+					Rectangle:
+						pos: self.pos
+						size: self.size		
+				
 				Image: 
 					size: self.parent.size  
 					pos: self.parent.pos  
@@ -839,14 +839,19 @@
 					readonly: True
 					text_size: self.size
 					markup: True					
-					halign: center
+					halign: 'center'
 						
-			HSButton:
-				##pos: self.parent.pos  
+			BoxLayout:	
+				##size: self.parent.size  
 				size_hint_y: .2
-				size_hint_x: .3
-				pos_hint_x: .4
-				text: 'Main Menu'
-				on_press: root.manager.current = 'MainMenu'
-			
+				pos: self.parent.pos  
+				orientation: 'horizontal'
 				
+				HSLabel:
+				
+				HSButton:
+					pos: self.parent.pos  
+					text: 'Main Menu'
+					on_press: root.manager.current = 'MainMenu'
+			
+				HSLabel:

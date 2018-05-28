@@ -71,7 +71,7 @@ class Card_Manager(Screen):
 		self.raceBannerSource = 'Resources/card_assets/race-banner.png'
 		self.cardTextSource = 'Resources/card_assets/elite-minion.png'
 		self.legendaryDragonSource = 'Resources/card_assets/elite-minion.png'
-		self.cardTextSource = 'Test Text'
+		self.cardTextSource = ''
 		self.manaValueSource = ''
 		self.raceValueSource = ''
 
