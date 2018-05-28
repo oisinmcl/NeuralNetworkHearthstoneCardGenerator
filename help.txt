@@ -1,0 +1,9 @@
+[b] Card Manager [/b]
+The Card Manager Screen is used for viewing generated JSON cards. A dropdown list allows for selecting a JSON file, stats such as file size and the number of cards in the file. The cards stored from the database can also be downloaded from this screen and viewed.
+The card viewer section is where the card art will be generated from the properties from the Card class.
+
+[b]Training Set up [/b]
+Training Set up is split in two sections with the Training Data and Neural Network Set Up sections. The Training Data section allows the user to download the latest card list from the hearthstone cards API, as the number of cards from in hearthstone is small as button for increasing the number of cards and randomizing there positions will be created. The Neural Network Set up section will allow for parameters of the neural network class, such as learning rate, to be experimented with.
+
+[b] Generate [/b]
+Generate Cards has controls allowing the user to interact with the Neural_Network class. The parameters checkpointFileName, outputFileName, internalSize, nLayers can all be accessed from this screen. The number of text characters to be generated can also be set here.

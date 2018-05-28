@@ -769,16 +769,29 @@
 		BoxLayout:	
 			size: self.parent.size  
 			pos: self.parent.pos  
+			orientation: 'vertical'
 			padding: 20 
 			spacing: 30
 				
-			ScrollView:
-				id: scrlv	
-				TextInput:
+			RelativeLayout:	
+			## ScrollView:
+				## id: scrlv	
+				## TextInput:
+					## size: self.parent.size  
+					## pos: self.parent.pos 
+					## multiline: True
+					## text: '\n a \n a \n a \n a \n a \n a \n a'
+			canvas.before:
+				Color:
+					rgba: 0.4, 0.37, 0.32, 0.8  # blue
+				Rectangle:
+					pos: self.pos
+					size: self.size		
+			
+				Image: 
 					size: self.parent.size  
-					pos: self.parent.pos 
-					multiline: True
-					text: '\n a \n a \n a \n a \n a \n a \n a'
+					pos: self.parent.pos  
+					source: 'Resources/loading.gif'	
 				
 			HSButton:
 				##pos: self.parent.pos  
@@ -804,14 +817,29 @@
 			size: self.parent.size  
 			pos: self.parent.pos  
 			orientation: 'vertical'
-			padding: 10
+			padding: 20 
+			spacing: 30
 			
-			BoxLayout:	
+			ScrollView:	
 				size: self.parent.size  
 				pos: self.parent.pos  
-				orientation: 'horizontal'
 				padding: 10
-					
+				
+				canvas.before:
+					Color:
+						rgba: 0.4, 0.37, 0.32, 0.8  # blue
+					Rectangle:
+						pos: self.pos
+						size: self.size		
+				
+				HSLabel:
+					text:  root.helpText
+					size: self.parent.size  
+					pos: self.parent.pos
+					readonly: True
+					text_size: self.size
+					markup: True					
+					halign: center
 						
 			HSButton:
 				##pos: self.parent.pos  

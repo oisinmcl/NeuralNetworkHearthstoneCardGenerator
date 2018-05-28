@@ -14,10 +14,16 @@ module_logger = logging.getLogger('myApp')
 
 class Help(Screen):
 
+	helpText = StringProperty()
 			   
 	def __init__(self, **kwargs): 
 		super(Help, self).__init__(**kwargs)
 
+		self.helpText = ''
+		
+		with open('help.txt', 'r') as myfile:
+			self.helpText = myfile.read()
+		
 		
 	def on_enter(self):
 		module_logger.info('Screen changed to :	'+ self.name)
