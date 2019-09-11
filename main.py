@@ -6,15 +6,15 @@ from kivy.uix.screenmanager import ScreenManager
 from kivy.lang import Builder
 from kivy.config import Config
 
-from hs_rnn import Neural_Network
+from NeuralNetwork.NeuralNetwork import NeuralNetwork
 
 #screen classes
-from main_menu import Main_Menu
-from training_setup import Training_Setup
-from generate_setup import Generate_Setup
-from card_manager import Card_Manager
-from training_stats import Training_Stats
-from help import Help
+from UI.MainMenu import MainMenu
+from UI.TrainingSetup import TrainingSetup
+from UI.GenerateSetup import GenerateSetup
+from UI.CardManager import CardManager
+from UI.TrainingStats import TrainingStats
+from UI.Help import Help
 
 import logging
 import datetime
@@ -42,7 +42,7 @@ logger.info('*****************Appication started*****************')
 
 #app specific config
 Config.read('config.ini')
-Builder.load_file('Screens/main.kv')
+Builder.load_file('UI/Screens/main.kv')
 
 sm = ScreenManager()
 		
@@ -51,14 +51,14 @@ class myApp(App):
 	icon = 'Resources/logo_hearthstone.ico'
 	title = 'Hearthstone Card Generation'
 	
-	nn = Neural_Network()
+	nn = NeuralNetwork()
 	
-	mainMenu = Main_Menu()
-	trainingSetup = Training_Setup(nn)
-	generateSetup = Generate_Setup(nn)
-	cardManager = Card_Manager()
+	mainMenu = MainMenu()
+	trainingSetup = TrainingSetup(nn)
+	generateSetup = GenerateSetup(nn)
+	cardManager = CardManager()
 	help = Help()
-	trainingStats = Training_Stats(nn)
+	trainingStats = TrainingStats(nn)
 	
 	sm.add_widget(mainMenu)
 	sm.add_widget(trainingSetup)

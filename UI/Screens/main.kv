@@ -1,0 +1,857 @@
+#:kivy 1.10.0
+
+#:import HSbutton UI.CustomWidgets.HSButton
+#:import HSLabel UI.CustomWidgets.HSLabel
+#:import HSTextInput UI.CustomWidgets.HSTextInput
+#:import HSCardText UI.CustomWidgets.HSCardText
+#:import HSStatsText UI.CustomWidgets.HSStatsText
+
+<MainMenu>:
+	name: 'MainMenu'
+	FloatLayout:
+		title: 'Main Menu'
+		canvas:
+			Color:
+				rgb: 1, 1, 1
+			Rectangle:
+				source: 'Resources/background.jpg'
+				size: self.size
+
+		BoxLayout:
+			orientation: 'vertical'
+			size: self.parent.size
+			pos: self.parent.pos
+			
+			Image: 
+				source: 'Resources/logo_text.png'
+			
+			GridLayout:
+				cols: 3	
+				size: self.parent.size
+				pos: self.parent.pos
+			
+				BoxLayout:	#formatting only
+				
+				BoxLayout: #center 
+					size: self.parent.size  
+					pos: self.parent.pos  	
+					orientation: 'vertical'
+					padding: 10
+					spacing: 5
+					
+					HSButton:
+						text: 'Card Manager'
+						on_press: root.manager.current = 'CardManager'					
+					
+					HSButton:
+						text: 'Train'
+						on_press: root.manager.current = 'TrainingSetup'
+						
+					HSButton:
+						text: 'Generate'
+						on_press: root.manager.current = 'GenerateSetup'
+
+					HSButton:
+						text: 'Help'
+						on_press: root.manager.current = 'Help'	
+						
+					BoxLayout:	#formatting only
+				BoxLayout:	#formatting only
+
+<TrainingSetup>:
+	name: 'TrainingSetup'
+	RelativeLayout:
+		title: 'Training Setup'
+		canvas:
+			Color:
+				rgb: 1, 1, 1
+			Rectangle:
+				source: 'Resources/background.jpg'
+				size: self.size
+		
+		
+		BoxLayout:	
+			size: self.parent.size  
+			pos: self.parent.pos  
+			orientation: 'vertical'
+			
+			HSLabel:
+				size: self.parent.size  
+				pos: self.parent.pos  
+				font_size: 30
+				text: 'Training Setup'
+				size_hint_y: 0.1
+
+				
+			BoxLayout:
+				size: self.parent.size  
+				pos: self.parent.pos  
+				orientation: 'horizontal'
+				padding: 50
+				spacing: 20
+				
+				BoxLayout:
+					canvas.before:
+						Color:
+							rgba: 0.4, 0.37, 0.32, 0.8  # blue
+						Rectangle:
+							pos: self.pos
+							size: self.size		
+					size: self.parent.size  
+					pos: self.parent.pos  
+					orientation: 'vertical'
+									
+					HSLabel:
+						size_hint_x: .5	
+						size_hint_y: .1
+						text: 'Training Data Stats'
+					
+					GridLayout:
+						cols: 2
+						padding: 10 
+						spacing: 30
+						
+						HSLabel:
+							text: 'Data Directory'
+							size_hint_x: .5	
+							pos: self.parent.pos
+							##on_release: root.showFileChooser()
+							
+						HSDirInput: 	
+							text:  str(root.dataPath)
+							on_text: root.dataPathChange(self.text)
+							##size: self.parent.size  
+							pos: self.parent.pos
+							on_release: root.showFileChooser()
+							
+							
+						HSLabel:
+							text: 'Number of Files'	
+							size_hint_x: .5	 
+							pos: self.parent.pos						
+							
+						HSTextInput: 
+							id: txt_numOfFiles
+							text: str(root.numOfFiles)
+							hint_text: 'Number of training files'	
+							size: self.parent.size  
+							pos: self.parent.pos
+							active: False
+							readonly: True							
+							
+							
+						HSLabel:
+							text: 'Total Data Size'
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSTextInput: 
+							id: txt_DataSize
+							text: str(root.fileSizes)
+							hint_text: 'Total Data Size'
+							size: self.parent.size  
+							pos: self.parent.pos						
+							readonly: True	
+							
+						HSButton:
+							text: 'Get Latest Cards'
+							font_size: 12
+							size: self.parent.size  
+							pos: self.parent.pos						
+							on_release: root.btnGetLastestCards()
+							
+						HSButton: 	
+							text: 'Get Cards by Parameter'
+							font_size: 12
+							size: self.parent.size  
+							pos: self.parent.pos
+							on_release: root.btnGetCardsByParam()								
+						
+				BoxLayout:
+					canvas.before:
+						Color:
+							rgba: 0.4, 0.37, 0.32, 0.8  # blue
+						Rectangle:
+							pos: self.pos
+							size: self.size
+
+					size: self.parent.size  
+					pos: self.parent.pos  
+					orientation: 'vertical'
+					
+					HSLabel:
+						size_hint_x: .5	
+						size_hint_y: .1
+						text: 'Neural Network Stats'
+					
+					GridLayout:
+						cols: 2
+						padding: 10 
+						spacing: 20
+						
+						HSLabel:
+							text: 'Number of Layers: '
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput: 	
+							id: txt_nLayersID
+							text:  str(root.nLayers)
+							hint_text: 'Number of Layers'	
+							on_text: root.nLayersChange(self)
+							min: 1
+							max: 10
+							#tooltiptext: 'Test tool tip'
+							input_type: 'number'
+							size: self.parent.size  
+							pos: self.parent.pos
+							size_hint_x: .5					
+							
+						HSLabel:
+							text: 'Internal Size: '	
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput:
+							id: txt_intSizeID
+							text:  str(root.internalSize)
+							hint_text: 'Internal Size'
+							on_text: root.internalSizeChange(self)
+							min: 256
+							max: 2048						
+							size: self.parent.size  
+							pos: self.parent.pos
+							size_hint_x: .5								
+							
+						HSLabel:
+							text: 'Learning Rate: '
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput: 
+							id: txt_learningRateID
+							text:  str(root.learningRate)
+							hint_text: 'Learning Rate'
+							on_text: root.learningRateChange(self)
+							min: 0.00001
+							max: 0.5
+							size: self.parent.size  
+							pos: self.parent.pos						
+							size_hint_x: .5		
+							
+						HSLabel:
+							text: 'Epochs: '	
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput: 
+							id: txt_epochID
+							text:  str(root.epochs)
+							hint_text: 'Epochs'
+							on_text: root.epochsChange(self)
+
+							size: self.parent.size  
+							pos: self.parent.pos						
+							size_hint_x: .5		
+							
+						HSLabel:
+							text: 'Target Accuracy: '	
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput: 
+							id: txt_epochID
+							text:  str(root.accuracyTarget)
+							hint_text: 'Target Accuracy '
+							on_text: root.accuracyTargetChange(self)
+
+							size: self.parent.size  
+							pos: self.parent.pos						
+							size_hint_x: .5									
+			GridLayout:
+				cols: 3
+				size_hint_y: .3
+				BoxLayout:
+					orientation: 'horizontal'
+					BoxLayout:
+					HSButton:
+						##font_name: 'Roboto'
+						size: self.parent.size  
+						pos: self.parent.pos	
+						on_press: root.manager.current = 'MainMenu'
+						text: 'Back' 
+						##text: u'\u21A9' ## unicode for back arrow
+					BoxLayout:
+					BoxLayout:
+				HSButton:
+					text: 'Start Training'
+					on_press: root.manager.current = 'trainingStats'
+					##on_release: app.trainingSetup.btnStartTraining(self)
+					##on_release: root.showNNStats()
+					##on_release: root.testingFunction()
+				BoxLayout:
+				BoxLayout:
+				BoxLayout:	
+
+<GenerateSetup>:
+	name: 'GenerateSetup'
+	RelativeLayout:
+		title: 'Generate Setup'
+		canvas:
+			Color:
+				rgb: 1, 1, 1
+			Rectangle:
+				source: 'Resources/background.jpg'
+				size: self.size
+		
+		
+		BoxLayout:	
+			size: self.parent.size  
+			pos: self.parent.pos  
+			orientation: 'vertical'
+			
+			HSLabel:
+				size: self.parent.size  
+				pos: self.parent.pos  
+				font_size: 30
+				text: 'Generate Setup'
+				size_hint_y: 0.1
+
+				
+			BoxLayout:
+				size: self.parent.size  
+				pos: self.parent.pos  
+				orientation: 'horizontal'
+				padding: 50
+				spacing: 20
+				
+				BoxLayout:
+					canvas.before:
+						Color:
+							rgba: 0.4, 0.37, 0.32, 0.8  # blue
+						Rectangle:
+							pos: self.pos
+							size: self.size		
+					size: self.parent.size  
+					pos: self.parent.pos  
+					orientation: 'vertical'
+									
+					HSLabel:
+						size_hint_x: .5	
+						size_hint_y: .1
+						text: 'Data Stats'
+					
+					GridLayout:
+						cols: 2
+						padding: 10 
+						spacing: 20
+						
+						HSLabel:
+							text: 'Output Directory'
+							size_hint_x: .5	
+							pos: self.parent.pos
+							##on_release: root.showFileChooser()
+							
+						HSDirInput: 	
+							text:  str(root.outputDir)
+							on_text: root.outputPathChange(self.text)
+							##size: self.parent.size  
+							pos: self.parent.pos
+							on_release: root.showOutputDirChooser()
+
+						HSLabel:
+							text: 'Num of Chars'
+							size_hint_x: .5	
+							pos: self.parent.pos
+							##on_release: root.showFileChooser()
+							
+						HSNumericInput: 	
+							text:  str(root.numOfChars)
+							on_text: root.numOfCharsChange(self)
+							##size: self.parent.size  
+							pos: self.parent.pos
+
+						BoxLayout:	
+						BoxLayout:
+						BoxLayout:
+						BoxLayout:
+						
+				BoxLayout:
+					canvas.before:
+						Color:
+							rgba: 0.4, 0.37, 0.32, 0.8  # blue
+						Rectangle:
+							pos: self.pos
+							size: self.size
+
+					size: self.parent.size  
+					pos: self.parent.pos  
+					orientation: 'vertical'
+					
+					HSLabel:
+						size_hint_x: .5	
+						size_hint_y: .1
+						text: 'Neural Network Stats'
+					
+					GridLayout:
+						cols: 2
+						padding: 10 
+						spacing: 20
+						
+						HSLabel:
+							text: 'Checkpoint File'
+							size_hint_x: .5	
+							pos: self.parent.pos
+							##on_release: root.showFileChooser()
+							
+						HSDirInput: 	
+							text:  str(root.checkpointFile)
+							on_text: root.checkpointFileChange(self.text)
+							##size: self.parent.size  
+							pos: self.parent.pos
+							on_release: root.showCheckpointFileChooser()		
+						
+						HSLabel:
+							text: 'Number of Layers: '
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput: 	
+							id: txt_nLayersID
+							text:  str(root.nLayers)
+							hint_text: 'Number of Layers'	
+							on_text: root.nLayersChange(self)
+							min: 1
+							max: 10
+							#tooltiptext: 'Test tool tip'
+							input_type: 'number'
+							size: self.parent.size  
+							pos: self.parent.pos
+							size_hint_x: .5					
+							
+						HSLabel:
+							text: 'Internal Size: '	
+							size: self.parent.size  
+							pos: self.parent.pos						
+							
+						HSNumericInput:
+							id: txt_intSizeID
+							text:  str(root.internalSize)
+							hint_text: 'Internal Size'
+							on_text: root.internalSizeChange(self)
+							min: 256
+							max: 2048						
+							size: self.parent.size  
+							pos: self.parent.pos
+							size_hint_x: .5			
+							
+						BoxLayout:
+						BoxLayout:						
+
+			GridLayout:
+				cols: 3
+				size_hint_y: .3
+				BoxLayout:
+					orientation: 'horizontal'
+					BoxLayout:
+					HSButton:
+						##font_name: 'Roboto'
+						size: self.parent.size  
+						pos: self.parent.pos	
+						on_press: root.manager.current = 'MainMenu'
+						text: 'Back' 
+						##text: u'\u21A9' ## unicode for back arrow
+					BoxLayout:
+					BoxLayout:
+				HSButton:
+					text: 'Start Generating'
+					##on_release: app.trainingSetup.btnStartTraining(self)
+					##on_release: root.showNNStats()
+					on_release: root.btnStartGenerating(self)
+				BoxLayout:
+				BoxLayout:
+				BoxLayout:	
+				
+<CardManager>:
+	name: 'CardManager'
+	RelativeLayout:
+		title: 'Training Setup'
+		canvas:
+			Color:
+				rgb: 1, 1, 1
+			Rectangle:
+				source: 'Resources/background.jpg'
+				size: self.size
+		
+		
+		BoxLayout:	
+			size: self.parent.size  
+			pos: self.parent.pos  
+			orientation: 'vertical'
+			padding: 10
+			
+			BoxLayout:
+				size: self.parent.size  
+				pos: self.parent.pos  
+				orientation: 'horizontal'
+				padding: 10
+				spacing: 20
+				
+				BoxLayout:
+					##left side box layout
+					size: self.parent.size  
+					pos: self.parent.pos  
+					orientation: 'vertical'
+					padding: 10
+					size_hint_x: .7
+					
+					canvas.before:
+						Color:
+							rgba: 0.4, 0.37, 0.32, 0.8  # grey
+						Rectangle:
+							pos: self.pos
+							size: self.size
+					GridLayout:
+						cols: 2
+						padding: 10 
+						
+						HSLabel:
+							text: 'Card File:'
+							size_hint_x: .5	
+							pos: self.parent.pos
+							
+						HSDirInput: 	
+							text:  str(root.cardFile)
+							on_text: root.changeCardFile(self.text)
+							##size: self.parent.size  
+							pos: self.parent.pos
+							on_release: root.showChangeCardChooser()		
+						
+						HSLabel:
+							text: 'Number of Cards: '
+							size: self.parent.size  
+							pos: self.parent.pos
+							readonly: True								
+							
+						HSNumericInput: 	
+							id: txt_numOfCards
+							text:  root.numOfCards
+							hint_text: 'Number of Cards'	
+							input_type: 'number'
+							size: self.parent.size  
+							pos: self.parent.pos
+							size_hint_x: .5	
+							readonly: True
+							
+						HSLabel:
+							text: 'Card Art File: '
+							size_hint_x: .5	
+							pos: self.parent.pos
+							
+						HSDirInput: 	
+							text:  str(root.cardArtSource)
+							##on_text: root.changeCardArt(self.text)
+							##size: self.parent.size  
+							pos: self.parent.pos
+							on_release: root.showChangeCardArtChooser()		
+							
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						HSLabel:						
+					
+					HSButton:
+						text: 'Download Cards From Database'
+						size_hint_y: .2
+						on_press: root.btnGetCardsFromDB(self)
+				
+				BoxLayout:
+					##right side box layout
+					size: self.parent.size  
+					pos: self.parent.pos  
+					orientation: 'horizontal'
+					padding: 10
+					spacing: 10
+					
+					canvas.before:
+						Color:
+							rgba: 0.4, 0.37, 0.32, 0.8  # grey
+						Rectangle:
+							pos: self.pos
+							size: self.size			
+							
+					RelativeLayout:
+						id: 'cardCanvas'
+						pos: self.pos
+						size: self.size	
+						
+
+							
+						StencilView:
+							id: StencilView
+							pos: self.pos
+							size: self.size
+							size_hint: 0.7, 0.6
+							pos: 53, 140							
+
+							ScatterLayout:
+								auto_bring_to_front: False
+								pos: art.pos
+								size: art.size	
+								
+								Image:
+									id: art
+									source: root.cardArtSource
+									pos: StencilView.pos
+									size: StencilView.size
+									keep_ratio: True	
+
+						
+						Image:
+							id: frame
+							source: root.frameSource
+							size_hint: 1, 1
+							keep_ratio: True
+							
+						Image:
+							id: rarity
+							source: root.raritySource
+							size_hint: 0.23, 0.23
+							pos: 147, 115
+							keep_ratio: True
+							
+						Image:
+							id: mana
+							source: root.manaSource
+							size_hint: 0.20, 0.20
+							pos: 38, 333
+							keep_ratio: True	
+
+						Image:
+							id: Racebanner
+							source: root.raceBannerSource
+							size_hint: 0.62, 0.62
+							pos: 78, -105
+							keep_ratio: True								
+							
+						Image:
+							id: health
+							source: root.healthSource
+							size_hint: 0.22, 0.22
+							pos: 275, -12
+							keep_ratio: True
+
+						Image:
+							id: attack
+							source: root.attackSource
+							size_hint: 0.23, 0.23
+							pos: 20, -10
+							keep_ratio: True
+
+						Image:
+							id: banner
+							source: root.bannerSource
+							size_hint: 0.69, 0.69
+							pos: 62, 45
+							keep_ratio: True
+							
+						Image:
+							id: dragon
+							source: root.legendaryDragonSource
+							size_hint: 0.60, 0.60
+							pos: 112, 225
+							keep_ratio: True
+							
+						##card text value
+						HSCardText: 
+							text: root.cardTextSource
+							pos: 90, 30
+							size_hint: 0.55, 0.28
+							text_size: self.size
+							
+						##race value
+						HSStatsText: 
+							text: root.raceValueSource
+							pos: 142, 15
+							size_hint: 0.3, 0.05
+							color: 1.0,1.0,1.0,1.0
+							text_size: self.size
+							font_size: 16
+									
+						##mana value
+						HSStatsText:
+							text: root.manaValueSource
+							pos: -115, 173
+							
+						##attack value	
+						HSStatsText:
+							text: root.attackValueSource
+							pos: -120, -175
+							font_size: 75
+							
+						##health value
+						HSStatsText:
+							text: root.healthValueSource
+							pos: 126, -175
+							font_size: 75	
+							
+						##name value
+						HSStatsText:
+							text: root.nameSource
+							pos: 67, 173
+							size_hint: 0.65, 0.1
+							color: 1.0,1.0,1.0,1.0
+							text_size: self.size
+							font_size: 20
+
+					BoxLayout:
+						size: self.parent.size  
+						pos: self.parent.pos  
+						orientation: 'vertical'
+						padding: 10
+						size_hint_x: .4
+						
+						canvas.before:
+							Color:
+								rgba: 0.4, 0.37, 0.32, 0.8  # grey
+							Rectangle:
+								pos: self.pos
+								size: self.size	
+								
+								
+						HSButton:
+							size: self.parent.size  
+							pos: self.parent.pos  
+							on_press: root.btnDecCardNum(self)
+							text: 'Previous'
+							
+						HSButton:
+							size: self.parent.size  
+							pos: self.parent.pos  
+							on_press: root.btnIncCardNum(self)
+							text: 'Next'
+							
+						HSButton:
+							size: self.parent.size  
+							pos: self.parent.pos  
+							on_press: root.btnRefresh(self)
+							text: 'Refresh'	
+							
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						HSLabel:
+						
+			HSButton:
+				##pos: self.parent.pos  
+				size_hint_y: .2
+				size_hint_x: .3
+				pos_hint_x: .4
+				text: 'Main Menu'
+				on_press: root.manager.current = 'MainMenu'
+
+<TrainingStats>:
+	name: 'trainingStats'
+	RelativeLayout:
+		title: 'Training Setup'
+		canvas:
+			Color:
+				rgb: 1, 1, 1
+			Rectangle:
+				source: 'Resources/background.jpg'
+				size: self.size
+		
+		
+		BoxLayout:	
+			size: self.parent.size  
+			pos: self.parent.pos  
+			orientation: 'vertical'
+			padding: 20 
+			spacing: 30
+				
+			RelativeLayout:	
+			## ScrollView:
+				## id: scrlv	
+				## TextInput:
+					## size: self.parent.size  
+					## pos: self.parent.pos 
+					## multiline: True
+					## text: '\n a \n a \n a \n a \n a \n a \n a'
+				canvas.before:
+					Color:
+						rgba: 0.4, 0.37, 0.32, 0.8  # blue
+					Rectangle:
+						pos: self.pos
+						size: self.size		
+				
+				Image: 
+					size: self.parent.size  
+					pos: self.parent.pos  
+					source: 'Resources/loading.gif'	
+				
+			HSButton:
+				##pos: self.parent.pos  
+				size_hint_y: .2
+				size_hint_x: .3
+				pos_hint_x: .4
+				text: 'Stop Training'
+				on_press: root.btnStopTraining(self)			
+							
+<Help>:
+	name: 'Help'
+	RelativeLayout:
+		title: 'Help'
+		canvas:
+			Color:
+				rgb: 1, 1, 1
+			Rectangle:
+				source: 'Resources/background.jpg'
+				size: self.size
+		
+		
+		BoxLayout:	
+			size: self.parent.size  
+			pos: self.parent.pos  
+			orientation: 'vertical'
+			padding: 20 
+			spacing: 30
+			
+			ScrollView:	
+				size: self.parent.size  
+				pos: self.parent.pos  
+				padding: 10
+				
+				canvas.before:
+					Color:
+						rgba: 0.4, 0.37, 0.32, 0.8  # blue
+					Rectangle:
+						pos: self.pos
+						size: self.size		
+				
+				HSLabel:
+					text:  root.helpText
+					size: self.parent.size  
+					pos: self.parent.pos
+					readonly: True
+					text_size: self.size
+					markup: True					
+					halign: 'center'
+						
+			BoxLayout:	
+				##size: self.parent.size  
+				size_hint_y: .2
+				pos: self.parent.pos  
+				orientation: 'horizontal'
+				
+				HSLabel:
+				
+				HSButton:
+					pos: self.parent.pos  
+					text: 'Main Menu'
+					on_press: root.manager.current = 'MainMenu'
+			
+				HSLabel:
