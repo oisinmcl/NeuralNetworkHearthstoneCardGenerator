@@ -1,12 +1,12 @@
 import unittest
 
-from data_tools import Data_Tools
+from Tools.DataTools import DataTools
 
-class Test_Data_Tools(unittest.TestCase):
+class Test_DataTools(unittest.TestCase):
 
 	def setUp(self):
 		unittest.TestCase.setUp(self)
-		self.dataTools = Data_Tools()
+		self.dataTools = DataTools()
 		
 	def tearDown(self):
 		unittest.TestCase.tearDown(self)

@@ -1,15 +1,15 @@
 import unittest
 import json
 
-from database_manager import Database_Manager
+from Database.DatabaseManager import DatabaseManager
 
 from urllib.error import HTTPError
 
-class Test_Database_Manager(unittest.TestCase):
+class Test_DatabaseManager(unittest.TestCase):
 
 	def setUp(self):
 		unittest.TestCase.setUp(self)
-		self.db = Database_Manager()
+		self.db = DatabaseManager()
 		self.testCardData = '{"artist": "test artist","cardClass": "NEUTRAL","collectible": true,"cost": 3,"dbfId": 2523,"flavor": "Test Flavor","id": "EX1_322","name": "test card","playerClass": "PRIEST","rarity": "COMMON","set": "GVG","text": "test text", "type": "MINION"}'
 		self.testCardJson = json.loads(self.testCardData)
 		

@@ -17,7 +17,7 @@ class DatabaseManager:
 		self.credentials = ""
 		self.dbURL = "https://final-year-project-f08b2.firebaseio.com/"
 		self.firebase = firebase.FirebaseApplication(self.dbURL, None)
-		self.dataDir = 'Output_data'
+		self.dataDir = 'NeuralNetwork/Output_data'
 		self.fileType = '.txt'
 	
 	def get(self):
@@ -25,7 +25,7 @@ class DatabaseManager:
 			result = self.firebase.get('/cards', None)
 			myJSON = json.dumps(result)
 			timestamp = str(math.trunc(time.time()))
-			with open(self.dataDir + '/NeuralNetwork/FirebaseCards_' + timestamp +self.fileType, mode='a+') as localfile:     
+			with open(self.dataDir + '/FirebaseCards_' + timestamp +self.fileType, mode='a+') as localfile:     
 				localfile.write(myJSON)	
 			return result
 		except HTTPError as ex: 
