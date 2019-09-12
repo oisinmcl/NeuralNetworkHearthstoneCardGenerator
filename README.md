@@ -1,4 +1,4 @@
-# Final Year Project
+# Neural Network Hearthstone Card Generator
 
 Hearthstone Card Generation using intelligent learning techniques.
 
