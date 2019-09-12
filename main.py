@@ -19,8 +19,6 @@ from UI.Help import Help
 import logging
 import datetime
 
-
-
 # create logger with 'myApp'
 logger = logging.getLogger('myApp')
 logger.setLevel(logging.DEBUG)
@@ -45,7 +43,6 @@ Config.read('config.ini')
 Builder.load_file('UI/Screens/main.kv')
 
 sm = ScreenManager()
-		
 		
 class myApp(App):
 	icon = 'Resources/logo_hearthstone.ico'
