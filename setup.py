@@ -8,6 +8,6 @@ setup(name='Hearthstone Card Generation',
       url='https://github.com/oisinmcl/final_year_project',
       packages=find_packages(exclude=['contrib', 'docs', 'tests*']),
 	   install_requires=["python-firebase >= 1.2.0 ",
-						"tensorflow == 2.3.1",
+						"tensorflow == 2.4.0",
 						"kivy == 1.10.0"],
      )
